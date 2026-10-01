@@ -101,6 +101,20 @@
   font-family: 'Playfair Display', serif;
 }
 
-.font-script {
+.font-history-quote {
   font-family: 'Dancing Script', cursive;
+  font-style: normal;
+}
+
+/* Reserva espacio fijo por diapositiva para evitar saltos durante el carrusel. */
+.hero-carousel-frame {
+  height: clamp(620px, 90vh, 760px);
+  height: clamp(620px, 90svh, 760px);
+}
+
+@media (min-width: 768px) {
+  .hero-carousel-frame {
+    height: max(72vh, calc(100vw / 2.2));
+    height: max(72svh, calc(100vw / 2.2));
+  }
 }

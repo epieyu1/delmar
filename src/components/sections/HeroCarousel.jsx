@@ -1,8 +1,7 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ImageWithFallback from '../common/ImageWithFallback';
 import Icon from '../common/Icon';
 import WhatsAppIcon from '../common/WhatsAppIcon';
-import BrandLogo from '../common/BrandLogo';
 import { getWhatsAppLink } from '../../constants/whatsapp';
 
 export const HeroCarousel = () => {
@@ -13,42 +12,27 @@ export const HeroCarousel = () => {
     () => [
       {
         id: 1,
-        title: 'Soy la mujer detrás de Del Mar ♡',
-        subtitle: 'Historias que nacen junto al mar.',
-        description:
-          'Del Mar nació de algo que para mí significa mucho más que un nombre. Es vida, sueños, esencia y familia. Cada pieza lleva un pedacito de ese sentimiento.',
-        badge: 'Creadora & Fundadora Wayúu',
-        ctaText: 'Ver Colección',
+        title: 'Historias que nacen junto al mar.',
+        ctaText: 'Ver colección',
         ctaLink: '#catalogo',
-        image: '/fundadora.jpg',
-        fallbackImage: '/fundadora-salinas.jpg'
+        image: '/fundadora.jpg'
       },
       {
         id: 2,
-        title: 'Historias que se llevan contigo',
-        subtitle: 'Amor por nuestras raíces y el mar de Dibulla.',
-        description:
-          'Cada pieza que comparto lleva el mar, nuestra tierra, nuestras historias y el trabajo hecho con las manos.',
-        badge: 'Dibulla • La Guajira',
-        ctaText: 'Conoce Mi Historia',
+        title: 'Artesanías con raíces que viajan contigo.',
+        ctaText: 'Conoce nuestra historia',
         ctaLink: '#historia',
-        image: '/fundadora-salinas.jpg',
-        fallbackImage: '/fundadora.jpg'
+        image: '/fundadora.jpg'
       },
       {
         id: 3,
-        title: 'De Dibulla para Toda Colombia',
-        subtitle: 'Envíos directos con atención personalizada.',
-        description:
-          'Llevamos la calidez de nuestras raíces y el talento de nuestros artesanos directamente a tu hogar.',
-        badge: 'Envíos a Nivel Nacional',
+        title: 'Del mar de Dibulla a tu hogar.',
         ctaText: 'Consultar por WhatsApp',
         ctaLink: getWhatsAppLink(
           'Hola Del Mar Artesanías 🌊, deseo consultar sobre sus artesanías de Dibulla, La Guajira.'
         ),
-        isExternal: true,
-        image: '/dibulla-mar.jpg',
-        fallbackImage: '/fundadora.jpg'
+        image: '/fundadora.jpg',
+        isExternal: true
       }
     ],
     []
@@ -57,140 +41,110 @@ export const HeroCarousel = () => {
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setCurrentSlide((index) => (index + 1) % slides.length);
     }, 7000);
     return () => clearInterval(timer);
   }, [isPaused, slides.length]);
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  const goToSlide = (index) => setCurrentSlide(index);
+  const goToNextSlide = () => setCurrentSlide((index) => (index + 1) % slides.length);
+  const goToPreviousSlide = () =>
+    setCurrentSlide((index) => (index - 1 + slides.length) % slides.length);
 
   return (
     <section
       id="inicio"
-      className="relative pt-20 sm:pt-24 md:pt-28 overflow-hidden bg-gradient-to-b from-sand-light to-sand"
+      className="relative w-full overflow-hidden bg-deep-blue"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onTouchStart={() => setIsPaused(true)}
       onTouchEnd={() => setIsPaused(false)}
       aria-label="Carrusel principal Del Mar"
     >
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-3 sm:py-4 relative mt-4">
+      <div className="hero-carousel-frame relative w-full overflow-hidden bg-deep-blue text-sand">
+        {slides.map((slide, index) => (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+              index === currentSlide ? 'z-10 opacity-100' : 'pointer-events-none opacity-0'
+            }`}
+            aria-hidden={index !== currentSlide}
+          >
+            <ImageWithFallback
+              src={slide.image}
+              fallback="/fundadora-salinas.jpg"
+              alt="Mujer wayúu frente al mar en La Guajira"
+              width={768}
+              height={1024}
+              className="absolute inset-0 h-full w-full object-cover object-center md:object-[center_75%]"
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchPriority={index === 0 ? 'high' : 'auto'}
+              decoding="async"
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-deep-blue/35 via-transparent to-deep-blue/20 md:bg-gradient-to-r md:from-deep-blue/60 md:via-deep-blue/15 md:to-transparent" />
 
-        {/* Carrusel principal */}
-        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-floating bg-deep-blue text-sand
-          min-h-[72vw] sm:min-h-[420px] md:min-h-[520px] lg:min-h-[580px] flex items-center border-2 border-gold/30">
+            <div className="absolute inset-x-5 top-[17%] z-20 flex flex-col items-center gap-4 text-center sm:gap-5 md:inset-x-auto md:bottom-[10%] md:left-[6%] md:top-auto md:w-[min(30vw,30rem)] md:items-start md:gap-5 md:text-left">
+              <h1 className="font-serif text-2xl font-semibold leading-tight text-sand drop-shadow-md sm:text-3xl md:text-4xl lg:text-5xl">
+                {slide.title}
+              </h1>
 
-          {slides.map((slide, index) => {
-            const isActive = index === currentSlide;
-            return (
-              <div
-                key={slide.id}
-                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                  isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
-                }`}
-                aria-hidden={!isActive}
-              >
-                {/* Imagen de fondo */}
-                <div className="absolute inset-0">
-                  <ImageWithFallback
-                    src={slide.image}
-                    fallback={slide.fallbackImage}
-                    alt={slide.title}
-                    className="w-full h-full object-cover object-center sm:object-right"
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                  />
-                  {/* Gradiente para legibilidad */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-deep-blue/95 via-deep-blue/75 to-deep-blue/20 sm:to-transparent" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-deep-blue/80 via-deep-blue/30 to-transparent sm:hidden" />
-                </div>
-
-                {/* Contenido superpuesto */}
-                <div className="relative z-20 h-full flex flex-col justify-center
-                  px-5 py-8 sm:px-10 sm:py-12 max-w-lg sm:max-w-xl">
-
-                  {/* Badge */}
-                  <span className="inline-flex items-center gap-1.5 self-start px-3 py-1 rounded-full
-                    bg-gold/20 text-gold border border-gold/40 text-[10px] sm:text-xs
-                    font-bold tracking-wider uppercase mb-3 backdrop-blur-sm">
-                    <Icon name="wayuu-sun" className="w-3 h-3 sm:w-4 sm:h-4 text-gold" />
-                    <span>{slide.badge}</span>
-                  </span>
-
-                  {/* Título */}
-                  <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-2 text-sand">
-                    {slide.title}
-                  </h1>
-
-                  {/* Subtítulo en script (igual al flyer) */}
-                  <p className="font-script text-lg sm:text-xl text-gold font-medium mb-2">
-                    {slide.subtitle}
-                  </p>
-
-                  {/* Descripción */}
-                  <p className="text-xs sm:text-sm text-sand/85 leading-relaxed mb-6 max-w-sm sm:max-w-md">
-                    {slide.description}
-                  </p>
-
-                  {/* CTA */}
-                  {slide.isExternal ? (
-                    <a href={slide.ctaLink} target="_blank" rel="noopener noreferrer"
-                      className="self-start inline-flex items-center gap-2 bg-wa-green hover:bg-wa-green-hover
-                        text-white px-5 py-3 sm:px-7 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm
-                        shadow-lg hover:shadow-xl transition-all active:scale-95 touch-manipulation">
-                      <WhatsAppIcon className="w-4 h-4 sm:w-5 sm:h-5" />
-                      <span>{slide.ctaText}</span>
-                    </a>
-                  ) : (
-                    <a href={slide.ctaLink}
-                      className="self-start inline-flex items-center gap-2 bg-gold hover:bg-gold/90
-                        text-deep-blue px-5 py-3 sm:px-7 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm
-                        shadow-lg hover:shadow-xl transition-all active:scale-95 touch-manipulation">
-                      <span>{slide.ctaText}</span>
-                      <Icon name="arrow-right" className="w-4 h-4" />
-                    </a>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-
-          {/* Flechas de navegación — solo desktop */}
-          <button type="button" onClick={prevSlide}
-            className="absolute left-3 z-30 p-2.5 sm:p-3 rounded-full bg-deep-blue/70 hover:bg-deep-blue
-              text-sand backdrop-blur-md border border-sand/20 transition-all hidden sm:flex items-center justify-center
-              focus:outline-none focus:ring-2 focus:ring-gold/50"
-            aria-label="Diapositiva anterior">
-            <Icon name="chevron-left" className="w-5 h-5" />
-          </button>
-          <button type="button" onClick={nextSlide}
-            className="absolute right-3 z-30 p-2.5 sm:p-3 rounded-full bg-deep-blue/70 hover:bg-deep-blue
-              text-sand backdrop-blur-md border border-sand/20 transition-all hidden sm:flex items-center justify-center
-              focus:outline-none focus:ring-2 focus:ring-gold/50"
-            aria-label="Siguiente diapositiva">
-            <Icon name="chevron-right" className="w-5 h-5" />
-          </button>
-
-          {/* Puntos de paginación */}
-          <div className="absolute bottom-4 sm:bottom-6 left-0 right-0 z-30 flex justify-center items-center gap-2">
-            {slides.map((_, idx) => (
-              <button key={idx} type="button" onClick={() => setCurrentSlide(idx)}
-                className={`rounded-full transition-all duration-500 focus:outline-none touch-manipulation
-                  ${idx === currentSlide ? 'w-6 sm:w-8 h-2 bg-gold' : 'w-2 h-2 bg-sand/40 hover:bg-sand/70'}`}
-                aria-label={`Ir a la diapositiva ${idx + 1}`}
-                aria-current={idx === currentSlide}
-              />
-            ))}
+              {slide.isExternal ? (
+                <a
+                  href={slide.ctaLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 w-fit items-center justify-center gap-2 rounded-full bg-wa-green px-5 py-3 text-xs font-semibold text-white shadow-md transition-colors hover:bg-wa-green-hover focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-deep-blue sm:text-sm md:text-base"
+                >
+                  <WhatsAppIcon className="h-4 w-4" />
+                  <span>{slide.ctaText}</span>
+                </a>
+              ) : (
+                <a
+                  href={slide.ctaLink}
+                  className="inline-flex min-h-11 w-fit items-center justify-center gap-2 rounded-full bg-gold px-5 py-3 text-xs font-semibold text-deep-blue shadow-md transition-colors hover:bg-gold/90 focus:outline-none focus:ring-2 focus:ring-sand focus:ring-offset-2 focus:ring-offset-deep-blue sm:text-sm md:text-base"
+                >
+                  <span>{slide.ctaText}</span>
+                  <Icon name="arrow-right" className="h-4 w-4" />
+                </a>
+              )}
+            </div>
           </div>
+        ))}
+
+        <div className="absolute bottom-5 right-5 z-30 flex items-center justify-end gap-2">
+          {slides.map((slide, index) => (
+            <button
+              key={slide.id}
+              type="button"
+              onClick={() => goToSlide(index)}
+              className={`h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-deep-blue ${
+                index === currentSlide ? 'w-7 bg-gold' : 'w-2 bg-sand/60 hover:bg-sand'
+              }`}
+              aria-label={`Ir a la diapositiva ${index + 1}`}
+              aria-current={index === currentSlide}
+            />
+          ))}
         </div>
 
-        {/* Logo del flyer debajo del carrusel en móvil (visible en pantalla pequeña) */}
-        <div className="flex justify-center mt-4 sm:hidden" aria-hidden="true">
-          <BrandLogo variant="dark" showSlogan size="md" />
-        </div>
+        <button
+          type="button"
+          onClick={goToPreviousSlide}
+          className="absolute left-4 top-1/2 z-30 hidden -translate-y-1/2 items-center justify-center rounded-full border border-sand/30 bg-deep-blue/70 p-3 text-sand backdrop-blur-sm transition-colors hover:bg-deep-blue focus:outline-none focus:ring-2 focus:ring-gold md:flex"
+          aria-label="Diapositiva anterior"
+        >
+          <Icon name="chevron-left" className="h-5 w-5" />
+        </button>
+        <button
+          type="button"
+          onClick={goToNextSlide}
+          className="absolute right-4 top-1/2 z-30 hidden -translate-y-1/2 items-center justify-center rounded-full border border-sand/30 bg-deep-blue/70 p-3 text-sand backdrop-blur-sm transition-colors hover:bg-deep-blue focus:outline-none focus:ring-2 focus:ring-gold md:flex"
+          aria-label="Siguiente diapositiva"
+        >
+          <Icon name="chevron-right" className="h-5 w-5" />
+        </button>
       </div>
-
     </section>
   );
 };
+
 export default HeroCarousel;

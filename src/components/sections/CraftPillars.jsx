@@ -7,13 +7,13 @@ export const CraftPillars = () => {
   return (
     <section
       id="pilares"
-      className="py-10 sm:py-14 md:py-16 bg-sand relative overflow-hidden"
+      className="py-12 sm:py-16 lg:py-20 bg-sand relative overflow-hidden"
       aria-label="Nuestros 4 Pilares Artesanales"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Encabezado — estilo flyer */}
-        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-12">
+        <div className="text-center max-w-xl mx-auto mb-10 sm:mb-12">
           {/* Logo pequeño decorativo */}
           <div className="flex justify-center mb-4 sm:mb-5">
             <BrandLogo variant="dark" showSlogan={false} size="sm" />
@@ -25,7 +25,7 @@ export const CraftPillars = () => {
           <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-deep-blue leading-tight">
             Historias que nacen junto al mar
           </h2>
-          <p className="font-script text-lg sm:text-xl text-gold mt-1">
+          <p className="font-serif text-lg sm:text-xl text-gold mt-1">
             Artesanías con alma y corazón.
           </p>
           <div className="flex items-center justify-center gap-2 mt-3">
@@ -54,15 +54,15 @@ export const CraftPillars = () => {
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-teal/10 text-teal flex items-center justify-center">
                     <Icon name={item.icon} className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
-                  <h3 className="font-serif font-bold text-xs sm:text-sm text-deep-blue uppercase tracking-wide leading-tight">
+                  <h3 className="font-serif font-bold text-[11px] sm:text-sm text-deep-blue uppercase tracking-wide leading-tight">
                     {item.title}
                   </h3>
-                  <span className="text-[9px] sm:text-[10px] font-bold tracking-widest uppercase text-terracotta
+                  <span className="text-[10px] sm:text-[11px] md:text-xs font-bold tracking-widest uppercase text-terracotta
                     bg-terracotta/10 px-2 py-0.5 rounded-full">
                     {item.subtitle}
                   </span>
                 </div>
-                <p className="text-[10px] sm:text-xs text-deep-blue/65 text-center leading-relaxed hidden sm:block">
+                <p className="text-[11px] sm:text-xs md:text-sm text-deep-blue/65 text-center leading-relaxed hidden sm:block">
                   {item.desc}
                 </p>
               </div>
@@ -80,10 +80,10 @@ export const CraftPillars = () => {
                   <div className="w-8 h-8 rounded-xl bg-gold/20 text-gold flex items-center justify-center mb-1.5">
                     <Icon name={item.icon} className="w-4 h-4" />
                   </div>
-                  <span className="text-gold text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-1">
+                  <span className="text-gold text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider mb-1">
                     {item.title}
                   </span>
-                  <p className="text-[10px] sm:text-xs text-sand/90 leading-relaxed">
+                  <p className="text-[11px] sm:text-xs md:text-sm text-sand/90 leading-relaxed">
                     {item.desc}
                   </p>
                 </div>

@@ -64,18 +64,18 @@ export const ProductModal = ({ product, onClose }) => {
           {/* Información detallada */}
           <div className="space-y-4">
             <div>
-              <span className="text-xs font-semibold text-teal tracking-widest uppercase">
+              <span className="text-[11px] sm:text-xs font-semibold text-teal tracking-widest uppercase">
                 {product.category} • {product.tag}
               </span>
               <h3
                 id="modal-product-title"
-                className="font-serif font-bold text-2xl text-deep-blue mt-1"
+                className="font-serif font-bold text-xl sm:text-2xl text-deep-blue mt-1"
               >
                 {product.name}
               </h3>
             </div>
 
-            <p className="font-sans font-bold text-xl text-terracotta">
+            <p className="font-sans font-bold text-lg sm:text-xl text-terracotta">
               {formatCurrency(product.price)}
             </p>
 
@@ -83,7 +83,7 @@ export const ProductModal = ({ product, onClose }) => {
               {product.description}
             </p>
 
-            <div className="space-y-2 pt-3 border-t border-sand-light text-xs text-deep-blue/70">
+            <div className="space-y-2 pt-3 border-t border-sand-light text-[11px] sm:text-sm text-deep-blue/70">
               <p>
                 <strong className="text-deep-blue">Técnica:</strong> {product.technique}
               </p>
@@ -96,7 +96,7 @@ export const ProductModal = ({ product, onClose }) => {
               href={waMsg}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2.5 bg-wa-green hover:bg-wa-green-hover text-white py-3.5 rounded-xl font-semibold text-sm shadow-md transition-all mt-4 focus:outline-none focus:ring-2 focus:ring-wa-green/50"
+              className="w-full inline-flex items-center justify-center gap-2.5 bg-wa-green hover:bg-wa-green-hover text-white py-3.5 rounded-xl font-semibold text-sm sm:text-base shadow-md transition-all mt-4 focus:outline-none focus:ring-2 focus:ring-wa-green/50"
             >
               <WhatsAppIcon className="w-5 h-5" />
               <span>Solicitar por WhatsApp</span>

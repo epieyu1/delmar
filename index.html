@@ -28,11 +28,14 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <!-- Imagen principal precargada para priorizar el LCP del banner -->
+    <link rel="preload" as="image" href="/fundadora.jpg" fetchpriority="high" />
+
     <!-- Google Fonts con Preconnect para máximo rendimiento CWV/LCP -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
       rel="stylesheet"
     />
 
@@ -55,8 +58,7 @@
             },
             fontFamily: {
               sans: ['Montserrat', 'sans-serif'],
-              serif: ['Playfair Display', 'serif'],
-              script: ['Dancing Script', 'cursive']
+              serif: ['Playfair Display', 'serif']
             },
             boxShadow: {
               'coastal': '0 10px 30px -10px rgba(10, 42, 67, 0.08)',

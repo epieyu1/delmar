@@ -49,7 +49,7 @@ export const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-sm font-medium text-deep-blue hover:text-terracotta transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-terracotta hover:after:w-full after:transition-all"
+                className="text-sm lg:text-base font-medium text-deep-blue hover:text-terracotta transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-terracotta hover:after:w-full after:transition-all"
               >
                 {link.name}
               </a>
@@ -62,7 +62,7 @@ export const Navbar = () => {
               href={generalWaMessage}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-wa-green hover:bg-wa-green-hover text-white px-5 py-2.5 rounded-full font-semibold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-wa-green/50"
+              className="inline-flex items-center gap-2 bg-wa-green hover:bg-wa-green-hover text-white px-5 py-2.5 rounded-full font-semibold text-xs sm:text-sm lg:text-base uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-wa-green/50"
             >
               <WhatsAppIcon className="w-4 h-4" />
               <span>Comprar</span>
@@ -106,7 +106,7 @@ export const Navbar = () => {
 
           <div className="flex-1 px-6 py-8 flex flex-col justify-between overflow-y-auto">
             <div className="space-y-6">
-              <p className="text-xs font-semibold uppercase tracking-widest text-teal mb-4">
+              <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-teal mb-4">
                 Menú de Navegación
               </p>
               {navLinks.map((link) => (
@@ -114,7 +114,7 @@ export const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileDrawerOpen(false)}
-                  className="block text-xl font-serif text-deep-blue hover:text-terracotta py-2 border-b border-sand-light/60 transition-colors"
+                  className="block text-lg sm:text-xl font-serif text-deep-blue hover:text-terracotta py-2 border-b border-sand-light/60 transition-colors"
                 >
                   {link.name}
                 </a>
@@ -126,7 +126,7 @@ export const Navbar = () => {
                 href={generalWaMessage}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-3 bg-wa-green text-white py-3.5 rounded-xl font-semibold text-sm shadow-md hover:bg-wa-green-hover transition-colors focus:outline-none focus:ring-2 focus:ring-wa-green/50"
+                className="w-full inline-flex items-center justify-center gap-3 bg-wa-green text-white py-3.5 rounded-xl font-semibold text-sm sm:text-base shadow-md hover:bg-wa-green-hover transition-colors focus:outline-none focus:ring-2 focus:ring-wa-green/50"
               >
                 <WhatsAppIcon className="w-5 h-5" />
                 <span>Pedir por WhatsApp</span>

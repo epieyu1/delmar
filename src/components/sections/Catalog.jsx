@@ -16,12 +16,12 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
   }, [selectedCategory, productsList]);
 
   return (
-    <section id="catalogo" className="py-16 md:py-24 bg-sand" aria-label="Catálogo de productos">
+    <section id="catalogo" className="py-12 sm:py-16 lg:py-20 bg-sand" aria-label="Catálogo de productos">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Cabecera del catálogo */}
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <span className="text-xs font-semibold uppercase tracking-widest text-terracotta">
+          <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-terracotta">
             Colección Exclusiva
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl font-bold text-deep-blue mt-2 mb-4">
@@ -92,7 +92,7 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
-                  <span className="absolute top-3 left-3 bg-deep-blue/90 backdrop-blur-sm text-gold text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                  <span className="absolute top-3 left-3 bg-deep-blue/90 backdrop-blur-sm text-gold text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
                     {product.tag}
                   </span>
                 </div>
@@ -100,16 +100,16 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
                 {/* Contenido de la tarjeta */}
                 <div className="p-5 flex-1 flex flex-col justify-between">
                   <div>
-                    <span className="text-[10px] font-semibold text-teal tracking-widest uppercase">
+                    <span className="text-[10px] sm:text-[11px] font-semibold text-teal tracking-widest uppercase">
                       {product.category}
                     </span>
                     <h3
                       onClick={() => onSelectProduct(product)}
-                      className="font-serif font-bold text-base text-deep-blue mt-1 mb-2 hover:text-terracotta transition-colors cursor-pointer line-clamp-1"
+                      className="font-serif font-bold text-sm sm:text-base text-deep-blue mt-1 mb-2 hover:text-terracotta transition-colors cursor-pointer line-clamp-1"
                     >
                       {product.name}
                     </h3>
-                    <p className="text-xs text-deep-blue/70 line-clamp-2 leading-relaxed mb-4">
+                    <p className="text-[11px] sm:text-sm text-deep-blue/70 line-clamp-2 leading-relaxed mb-4">
                       {product.shortDesc}
                     </p>
                   </div>
@@ -117,10 +117,10 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
                   {/* Fila de precio y acciones */}
                   <div className="pt-3 border-t border-sand-light flex items-center justify-between mt-2">
                     <div>
-                      <span className="text-[10px] text-deep-blue/50 block font-medium">
+                      <span className="text-[10px] sm:text-[11px] text-deep-blue/50 block font-medium">
                         Precio
                       </span>
-                      <span className="font-sans font-bold text-base text-terracotta">
+                      <span className="font-sans font-bold text-sm sm:text-base text-terracotta">
                         {formatCurrency(product.price)}
                       </span>
                     </div>
@@ -139,7 +139,7 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
                         href={waMsg}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 bg-wa-green hover:bg-wa-green-hover text-white text-xs px-3.5 py-2 rounded-xl font-semibold transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-wa-green/50"
+                        className="inline-flex items-center gap-1.5 bg-wa-green hover:bg-wa-green-hover text-[11px] sm:text-xs px-3.5 py-2 rounded-xl font-semibold transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-wa-green/50"
                         title="Pedir por WhatsApp"
                       >
                         <WhatsAppIcon className="w-3.5 h-3.5" />

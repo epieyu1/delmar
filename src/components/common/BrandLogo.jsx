@@ -1,6 +1,6 @@
 /**
  * Logo oficial de Del Mar Artesanías
- * Fiel al flyer: sol con espiral náutilo, olas triples, tipografía script + versales con guiones
+ * Fiel al flyer: sol con espiral náutilo, olas triples, tipografía serif + versales con guiones
  */
 export const BrandLogo = ({
   variant = 'dark',
@@ -15,9 +15,9 @@ export const BrandLogo = ({
   const tealMid = '#3AA6B2';
 
   const sizes = {
-    sm:  { icon: 'h-9 w-9',  brand: 'text-2xl', sub: 'text-[8px]', slogan: 'text-[10px]', gap: 'gap-2' },
-    md:  { icon: 'h-11 w-11', brand: 'text-3xl', sub: 'text-[9px]', slogan: 'text-xs',    gap: 'gap-2.5' },
-    lg:  { icon: 'h-14 w-14', brand: 'text-4xl', sub: 'text-[10px]', slogan: 'text-sm',   gap: 'gap-3' },
+    sm: { icon: 'h-9 w-9', brand: 'text-xl sm:text-2xl', sub: 'text-[9px] sm:text-[10px]', slogan: 'text-[11px] sm:text-xs', gap: 'gap-2' },
+    md: { icon: 'h-11 w-11', brand: 'text-2xl sm:text-3xl', sub: 'text-[9px] sm:text-[10px]', slogan: 'text-[11px] sm:text-xs', gap: 'gap-2.5' },
+    lg: { icon: 'h-14 w-14', brand: 'text-3xl sm:text-4xl', sub: 'text-[10px] sm:text-xs', slogan: 'text-xs sm:text-sm', gap: 'gap-3' },
   };
   const s = sizes[size] || sizes.md;
 
@@ -81,9 +81,9 @@ export const BrandLogo = ({
 
       {/* Bloque tipográfico */}
       <div className="flex flex-col items-start leading-none">
-        {/* "Del Mar" en script grande */}
+        {/* Nombre de la marca en tipografía serif */}
         <span
-          className={`font-script font-bold ${s.brand} leading-none tracking-tight`}
+          className={`font-serif font-bold ${s.brand} leading-none tracking-tight`}
           style={{ color: navy }}
         >
           Del Mar
@@ -101,10 +101,10 @@ export const BrandLogo = ({
           <span style={{ backgroundColor: gold }} className="h-px flex-1 w-3 min-w-[10px]" />
         </div>
 
-        {/* Slogan en script pequeño, oculto en xs */}
+        {/* Slogan breve, oculto en xs */}
         {showSlogan && (
           <span
-            className={`font-script ${s.slogan} mt-0.5 hidden sm:block`}
+            className={`font-sans ${s.slogan} mt-0.5 hidden sm:block`}
             style={{ color: gold }}
           >
             Historias que nacen junto al mar.

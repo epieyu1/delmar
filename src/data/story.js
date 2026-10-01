@@ -13,7 +13,7 @@ export const BRAND_STORY = {
     'Del Mar nació de algo que para mí significa mucho más que un nombre. Es vida, sueños, esencia y familia.',
     'Cada pieza que comparto lleva un pedacito de ese sentimiento: el mar, nuestra tierra, nuestras historias y el trabajo hecho con las manos.'
   ],
-  quote: 'Gracias por estar aquí\nGracias por ser parte de esta historia 🤍',
+  quote: 'Gracias por estar aquí, gracias por ser parte de esta historia.',
   signature: '— Creadora & Fundadora • Del Mar Artesanías',
   contactSummary: {
     phone: '321 836 8605',

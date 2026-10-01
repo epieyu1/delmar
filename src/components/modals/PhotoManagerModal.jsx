@@ -48,16 +48,16 @@ export const PhotoManagerModal = ({ isOpen, onClose, onUploadLocalImages }) => {
             <Icon name="image" className="w-5 h-5" />
           </div>
           <div>
-            <h3 id="photo-modal-title" className="font-serif font-bold text-lg text-deep-blue">
+            <h3 id="photo-modal-title" className="font-serif font-bold text-base sm:text-lg text-deep-blue">
               Gestor de Fotos de WhatsApp
             </h3>
-            <p className="text-xs text-deep-blue/70">
+            <p className="text-[11px] sm:text-sm text-deep-blue/70">
               Prueba tus fotos tomadas desde tu teléfono directamente en la web
             </p>
           </div>
         </div>
 
-        <div className="space-y-4 my-6 text-xs text-deep-blue/80">
+        <div className="space-y-4 my-6 text-[11px] sm:text-sm text-deep-blue/80">
           <p className="leading-relaxed">
             Puedes seleccionar fotos desde tu computadora o teléfono para ver cómo lucirán en tu tienda antes de publicarlas:
           </p>
@@ -75,9 +75,9 @@ export const PhotoManagerModal = ({ isOpen, onClose, onUploadLocalImages }) => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => handleFileChange(e, 'mochila')}
-                className="w-full text-xs text-deep-blue file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-gold file:text-deep-blue hover:file:bg-gold/80 cursor-pointer"
+                className="w-full text-[11px] sm:text-xs text-deep-blue file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-[11px] sm:file:text-xs file:font-semibold file:bg-gold file:text-deep-blue hover:file:bg-gold/80 cursor-pointer"
               />
-              <span className="text-[10px] text-deep-blue/60 mt-0.5 block">
+              <span className="text-[10px] sm:text-[11px] text-deep-blue/60 mt-0.5 block">
                 Nombre esperado en producción: <code>WhatsApp Image 2026-09-30 at 10.16.35 PM_2.jpeg</code>
               </span>
             </div>
@@ -94,9 +94,9 @@ export const PhotoManagerModal = ({ isOpen, onClose, onUploadLocalImages }) => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => handleFileChange(e, 'vestido')}
-                className="w-full text-xs text-deep-blue file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-teal file:text-white hover:file:bg-teal-dark cursor-pointer"
+                className="w-full text-[11px] sm:text-xs text-deep-blue file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-[11px] sm:file:text-xs file:font-semibold file:bg-teal file:text-white hover:file:bg-teal-dark cursor-pointer"
               />
-              <span className="text-[10px] text-deep-blue/60 mt-0.5 block">
+              <span className="text-[10px] sm:text-[11px] text-deep-blue/60 mt-0.5 block">
                 Nombre esperado en producción: <code>WhatsApp Image 2026-09-30 at 10.17.02 PM.jpeg</code>
               </span>
             </div>
@@ -106,7 +106,7 @@ export const PhotoManagerModal = ({ isOpen, onClose, onUploadLocalImages }) => {
         <button
           type="button"
           onClick={onClose}
-          className="w-full bg-deep-blue text-sand py-3 rounded-xl font-semibold text-xs uppercase tracking-wider hover:bg-teal transition-colors focus:outline-none focus:ring-2 focus:ring-gold/50"
+          className="w-full bg-deep-blue text-sand py-3 rounded-xl font-semibold text-xs sm:text-sm uppercase tracking-wider hover:bg-teal transition-colors focus:outline-none focus:ring-2 focus:ring-gold/50"
         >
           Listo y Guardar Vista Previa
         </button>
