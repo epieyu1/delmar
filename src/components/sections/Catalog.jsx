@@ -33,28 +33,51 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
         </div>
 
         {/* Filtros por Categoría */}
-        <div className="flex justify-center mb-10">
+        <div className="mb-10">
+          <div className="relative mx-auto w-full max-w-sm sm:hidden">
+            <label htmlFor="catalog-category" className="sr-only">
+              Filtrar por categoría
+            </label>
+            <select
+              id="catalog-category"
+              value={selectedCategory}
+              onChange={(event) => setSelectedCategory(event.target.value)}
+              className="w-full appearance-none rounded-xl border border-sand-light bg-white px-4 py-3 pr-10 text-sm font-medium text-deep-blue shadow-sm focus:outline-none focus:ring-2 focus:ring-gold/50"
+            >
+              {CATEGORIES.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            <Icon
+              name="chevron-right"
+              className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-deep-blue"
+              aria-hidden="true"
+            />
+          </div>
+
           <div
-            className="flex items-center gap-2 overflow-x-auto max-w-full pb-2 no-scrollbar px-2"
+            className="mx-auto hidden max-w-5xl flex-wrap items-center justify-center gap-2 sm:flex"
             role="tablist"
             aria-label="Filtro de categorías de productos"
           >
-            {CATEGORIES.map((cat) => {
-              const isSelected = selectedCategory === cat;
+            {CATEGORIES.map((category) => {
+              const isSelected = selectedCategory === category;
               return (
                 <button
-                  key={cat}
+                  key={category}
                   type="button"
                   role="tab"
                   aria-selected={isSelected}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/50 ${
+                  onClick={() => setSelectedCategory(category)}
+                  className={`rounded-full px-4 py-2.5 text-xs font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/50 sm:px-5 sm:text-sm ${
                     isSelected
                       ? 'bg-deep-blue text-sand shadow-md'
                       : 'bg-sand-light text-deep-blue/80 hover:bg-teal/10 hover:text-teal'
                   }`}
                 >
-                  {cat}
+                  {category}
                 </button>
               );
             })}

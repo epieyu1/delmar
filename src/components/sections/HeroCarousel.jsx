@@ -81,7 +81,7 @@ export const HeroCarousel = () => {
               fetchPriority={index === 0 ? 'high' : 'auto'}
               decoding="async"
             />
-            <div className="absolute inset-0 bg-gradient-to-br from-deep-blue/35 via-transparent to-deep-blue/20 md:bg-gradient-to-r md:from-deep-blue/60 md:via-deep-blue/15 md:to-transparent" />
+            <div className="absolute inset-0 bg-deep-blue/20" />
 
             <div className="absolute inset-x-5 top-[17%] z-20 flex flex-col items-center gap-4 text-center sm:gap-5 md:inset-x-auto md:bottom-[10%] md:left-[6%] md:top-auto md:w-[min(30vw,30rem)] md:items-start md:gap-5 md:text-left">
               <h1 className="font-serif text-2xl font-semibold leading-tight text-sand drop-shadow-md sm:text-3xl md:text-4xl lg:text-5xl">
