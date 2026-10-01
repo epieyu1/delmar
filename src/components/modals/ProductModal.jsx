@@ -39,12 +39,12 @@ export const ProductModal = ({ product, onClose }) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-floating relative border border-sand-light max-h-[90vh] overflow-y-auto">
+      <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-sand-light bg-sand p-5 shadow-floating sm:p-8">
         {/* Botón cerrar */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-2.5 rounded-full bg-sand-light text-deep-blue hover:bg-deep-blue hover:text-sand transition-colors z-10 focus:outline-none focus:ring-2 focus:ring-gold/50"
+          className="button-interaction absolute right-4 top-4 z-10 rounded-full bg-sand-light p-2.5 text-deep-blue transition-colors hover:bg-deep-blue hover:text-sand focus:outline-none focus:ring-2 focus:ring-gold/50"
           aria-label="Cerrar ventana de detalle"
         >
           <Icon name="x" className="w-5 h-5" />
@@ -96,7 +96,7 @@ export const ProductModal = ({ product, onClose }) => {
               href={waMsg}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2.5 bg-wa-green hover:bg-wa-green-hover text-white py-3.5 rounded-xl font-semibold text-sm sm:text-base shadow-md transition-all mt-4 focus:outline-none focus:ring-2 focus:ring-wa-green/50"
+              className="button-interaction mt-4 inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-wa-green py-3.5 text-sm font-semibold text-deep-blue shadow-md transition-all hover:bg-wa-green-hover focus:outline-none focus:ring-2 focus:ring-wa-green/50 sm:text-base"
             >
               <WhatsAppIcon className="w-5 h-5" />
               <span>Solicitar por WhatsApp</span>

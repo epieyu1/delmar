@@ -11,13 +11,13 @@ export const BrandStory = () => {
   return (
     <section
       id="historia"
-      className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-sand via-sand-light/50 to-sand relative overflow-hidden"
+      className="relative overflow-hidden bg-gradient-to-b from-sand via-sand-light/50 to-sand py-10 sm:py-16 lg:py-20"
       aria-label="La Historia de Del Mar y Nuestra Creadora"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Cabecera de la sección */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+        <div className="mx-auto mb-8 max-w-3xl text-center sm:mb-12">
           <span className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-[0.28em] text-teal bg-teal/10 px-4 py-1.5 rounded-full mb-3">
             <Icon name="seashell" className="w-3.5 h-3.5 text-teal" />
             <span>Creadora & Fundadora Wayúu</span>
@@ -31,7 +31,7 @@ export const BrandStory = () => {
         </div>
 
         {/* Tarjeta Principal con la Foto Limpia de la Fundadora y el Relato */}
-        <div className="bg-white rounded-3xl border-2 border-teal/20 shadow-floating overflow-hidden p-6 sm:p-10 lg:p-12 relative mb-12">
+        <div className="relative mb-10 overflow-hidden rounded-3xl border-2 border-teal/20 bg-sand p-4 shadow-floating sm:mb-12 sm:p-10 lg:p-12">
           
           {/* Acentos decorativos de esquinas */}
           <div className="absolute top-4 right-4 text-gold/25 pointer-events-none hidden sm:block">
@@ -41,7 +41,7 @@ export const BrandStory = () => {
             <Icon name="seagulls" className="w-14 h-14" />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-12 lg:gap-14">
             
             {/* Fotografía Oficial Limpia de la Fundadora */}
             <div className="lg:col-span-5 relative">
@@ -62,7 +62,7 @@ export const BrandStory = () => {
                     <Icon name="heart-soul" className="w-4 h-4 text-gold" />
                     <span>Creadora & Fundadora</span>
                   </div>
-                  <p className="font-serif text-xl sm:text-2xl font-bold leading-tight text-white">
+                  <p className="font-serif text-xl sm:text-2xl font-bold leading-tight text-sand">
                     Del Mar Artesanías
                   </p>
                   <p className="text-[11px] sm:text-xs text-sand/80 mt-1 flex items-center gap-1">
@@ -99,7 +99,7 @@ export const BrandStory = () => {
               </div>
 
               {/* Tarjeta de Agradecimiento y Cita de la Fundadora */}
-              <div className="bg-deep-blue text-sand p-6 sm:p-7 rounded-2xl shadow-sm relative mt-6 border border-gold/30">
+              <div className="relative mt-5 rounded-2xl border border-gold/30 bg-deep-blue p-5 text-sand shadow-sm sm:mt-6 sm:p-7">
                 <Icon name="quote" className="w-8 h-8 text-gold/30 absolute top-3 left-4" />
                 <blockquote className="font-history-quote relative z-10 text-xl sm:text-2xl md:text-3xl text-gold text-center py-1 leading-relaxed">
                   {BRAND_STORY.quote}
@@ -122,7 +122,7 @@ export const BrandStory = () => {
                   href={waQuoteMessage}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2.5 bg-wa-green hover:bg-wa-green-hover text-white px-6 py-3.5 rounded-full font-bold text-sm sm:text-base shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-wa-green/50"
+                  className="button-interaction inline-flex items-center justify-center gap-2.5 rounded-full bg-wa-green px-6 py-3.5 text-sm font-bold text-deep-blue shadow-md transition-all hover:bg-wa-green-hover hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-wa-green/50 sm:text-base"
                 >
                   <WhatsAppIcon className="w-4 h-4" />
                   <span>Hablar con la Fundadora</span>
@@ -133,15 +133,15 @@ export const BrandStory = () => {
         </div>
 
         {/* Los 4 Pilares dispuestos en cinta */}
-        <div className="bg-sand-light rounded-3xl p-6 sm:p-8 border border-sand-light">
+        <div className="rounded-3xl border border-sand-light bg-sand-light p-4 sm:p-8">
           <p className="text-center text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] text-teal mb-6">
             Los 4 Sellos de Nuestra Identidad
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 gap-3 sm:gap-6 md:grid-cols-4">
             {CRAFT_PILLARS.map((pillar) => (
               <div
                 key={pillar.id}
-                className="bg-white rounded-2xl p-4 text-center border border-sand-light shadow-sm flex flex-col items-center justify-center gap-2 hover:border-gold/50 transition-all"
+                className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-sand-light bg-sand p-4 text-center shadow-sm transition-all hover:border-gold/50"
               >
                 <div className="w-10 h-10 rounded-xl bg-teal/10 text-teal flex items-center justify-center">
                   <Icon name={pillar.icon} className="w-5 h-5" />

@@ -13,7 +13,7 @@ export const App = () => {
   const [productsList] = useState(INITIAL_PRODUCTS);
 
   return (
-    <div className="min-h-screen flex flex-col bg-sand text-deep-blue antialiased selection:bg-gold selection:text-white">
+    <div className="min-h-screen flex flex-col bg-sand text-deep-blue antialiased selection:bg-gold selection:text-sand">
       <Navbar />
       
       <main className="flex-1">

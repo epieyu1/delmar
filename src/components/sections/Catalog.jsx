@@ -16,11 +16,11 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
   }, [selectedCategory, productsList]);
 
   return (
-    <section id="catalogo" className="py-12 sm:py-16 lg:py-20 bg-sand" aria-label="Catálogo de productos">
+    <section id="catalogo" className="py-10 sm:py-16 lg:py-20 bg-sand" aria-label="Catálogo de productos">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Cabecera del catálogo */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
           <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-terracotta">
             Colección Exclusiva
           </span>
@@ -33,7 +33,7 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
         </div>
 
         {/* Filtros por Categoría */}
-        <div className="mb-10">
+        <div className="mb-8 sm:mb-10">
           <div className="relative mx-auto w-full max-w-sm sm:hidden">
             <label htmlFor="catalog-category" className="sr-only">
               Filtrar por categoría
@@ -42,7 +42,7 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
               id="catalog-category"
               value={selectedCategory}
               onChange={(event) => setSelectedCategory(event.target.value)}
-              className="w-full appearance-none rounded-xl border border-sand-light bg-white px-4 py-3 pr-10 text-sm font-medium text-deep-blue shadow-sm focus:outline-none focus:ring-2 focus:ring-gold/50"
+              className="w-full appearance-none rounded-xl border border-sand-light bg-sand px-4 py-3 pr-10 text-sm font-medium text-deep-blue shadow-sm focus:outline-none focus:ring-2 focus:ring-gold/50"
             >
               {CATEGORIES.map((category) => (
                 <option key={category} value={category}>
@@ -71,7 +71,7 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
                   role="tab"
                   aria-selected={isSelected}
                   onClick={() => setSelectedCategory(category)}
-                  className={`rounded-full px-4 py-2.5 text-xs font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/50 sm:px-5 sm:text-sm ${
+                  className={`button-interaction rounded-full px-4 py-2.5 text-xs font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/50 sm:px-5 sm:text-sm ${
                     isSelected
                       ? 'bg-deep-blue text-sand shadow-md'
                       : 'bg-sand-light text-deep-blue/80 hover:bg-teal/10 hover:text-teal'
@@ -85,14 +85,14 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
         </div>
 
         {/* Grilla responsiva de productos */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 lg:gap-8">
           {filteredProducts.map((product) => {
             const waMsg = getProductOrderMessage(product);
 
             return (
               <article
                 key={product.id}
-                className="group bg-white rounded-2xl overflow-hidden border border-sand-light shadow-sm hover:shadow-coastal transition-all duration-300 flex flex-col"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-sand-light bg-sand shadow-sm transition-all duration-300 hover:shadow-coastal"
               >
                 {/* Contenedor de imagen cuadrado y contenido sin desbordamiento */}
                 <div
@@ -121,7 +121,7 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
                 </div>
 
                 {/* Contenido de la tarjeta */}
-                <div className="p-5 flex-1 flex flex-col justify-between">
+                <div className="flex flex-1 flex-col justify-between p-3 sm:p-5">
                   <div>
                     <span className="text-[10px] sm:text-[11px] font-semibold text-teal tracking-widest uppercase">
                       {product.category}
@@ -152,7 +152,7 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
                       <button
                         type="button"
                         onClick={() => onSelectProduct(product)}
-                        className="p-2 rounded-lg text-deep-blue hover:bg-sand-light transition-colors focus:outline-none focus:ring-2 focus:ring-gold/50"
+                        className="button-interaction rounded-lg p-2 text-deep-blue transition-colors hover:bg-sand-light focus:outline-none focus:ring-2 focus:ring-gold/50"
                         title="Ver Detalles de la pieza"
                         aria-label={`Ver detalles de ${product.name}`}
                       >
@@ -162,10 +162,10 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
                         href={waMsg}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 bg-wa-green hover:bg-wa-green-hover text-[11px] sm:text-xs px-3.5 py-2 rounded-xl font-semibold transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-wa-green/50"
+                        className="button-interaction inline-flex items-center gap-1.5 rounded-xl bg-wa-green px-3.5 py-2 text-[11px] font-semibold text-deep-blue shadow-sm transition-colors hover:bg-wa-green-hover focus:outline-none focus:ring-2 focus:ring-wa-green/50 sm:text-xs"
                         title="Pedir por WhatsApp"
                       >
-                        <WhatsAppIcon className="w-3.5 h-3.5" />
+                        <WhatsAppIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
                         <span>Pedir</span>
                       </a>
                     </div>

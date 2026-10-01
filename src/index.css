@@ -79,6 +79,31 @@
   animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Interacción coherente para controles accionables, con movimiento reducido. */
+.button-interaction {
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease,
+    color 180ms ease, border-color 180ms ease;
+}
+
+.button-interaction:hover {
+  transform: translateY(-1px);
+}
+
+.button-interaction:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button-interaction {
+    transition: none;
+  }
+
+  .button-interaction:hover,
+  .button-interaction:active {
+    transform: none;
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

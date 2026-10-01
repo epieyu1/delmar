@@ -33,11 +33,11 @@ export const PhotoManagerModal = ({ isOpen, onClose, onUploadLocalImages }) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-floating relative border border-sand-light max-h-[90vh] overflow-y-auto">
+      <div className="relative max-h-[90vh] w-full max-w-xl overflow-y-auto rounded-3xl border border-sand-light bg-sand p-5 shadow-floating sm:p-8">
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full bg-sand-light text-deep-blue hover:bg-deep-blue hover:text-sand transition-colors focus:outline-none focus:ring-2 focus:ring-gold/50"
+          className="button-interaction absolute right-4 top-4 rounded-full bg-sand-light p-2 text-deep-blue transition-colors hover:bg-deep-blue hover:text-sand focus:outline-none focus:ring-2 focus:ring-gold/50"
           aria-label="Cerrar gestor de fotos"
         >
           <Icon name="x" className="w-5 h-5" />
@@ -94,7 +94,7 @@ export const PhotoManagerModal = ({ isOpen, onClose, onUploadLocalImages }) => {
                 type="file"
                 accept="image/*"
                 onChange={(e) => handleFileChange(e, 'vestido')}
-                className="w-full text-[11px] sm:text-xs text-deep-blue file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-[11px] sm:file:text-xs file:font-semibold file:bg-teal file:text-white hover:file:bg-teal-dark cursor-pointer"
+                className="w-full text-[11px] sm:text-xs text-deep-blue file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-[11px] sm:file:text-xs file:font-semibold file:bg-teal file:text-sand hover:file:bg-teal-dark cursor-pointer"
               />
               <span className="text-[10px] sm:text-[11px] text-deep-blue/60 mt-0.5 block">
                 Nombre esperado en producción: <code>WhatsApp Image 2026-09-30 at 10.17.02 PM.jpeg</code>
@@ -106,7 +106,7 @@ export const PhotoManagerModal = ({ isOpen, onClose, onUploadLocalImages }) => {
         <button
           type="button"
           onClick={onClose}
-          className="w-full bg-deep-blue text-sand py-3 rounded-xl font-semibold text-xs sm:text-sm uppercase tracking-wider hover:bg-teal transition-colors focus:outline-none focus:ring-2 focus:ring-gold/50"
+          className="button-interaction w-full rounded-xl bg-deep-blue py-3 text-xs font-semibold uppercase tracking-wider text-sand transition-colors hover:bg-teal focus:outline-none focus:ring-2 focus:ring-gold/50 sm:text-sm"
         >
           Listo y Guardar Vista Previa
         </button>

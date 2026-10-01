@@ -7,13 +7,13 @@ export const CraftPillars = () => {
   return (
     <section
       id="pilares"
-      className="py-12 sm:py-16 lg:py-20 bg-sand relative overflow-hidden"
+      className="relative overflow-hidden bg-sand py-10 sm:py-16 lg:py-20"
       aria-label="Nuestros 4 Pilares Artesanales"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Encabezado — estilo flyer */}
-        <div className="text-center max-w-xl mx-auto mb-10 sm:mb-12">
+        <div className="mx-auto mb-8 max-w-xl text-center sm:mb-12">
           {/* Logo pequeño decorativo */}
           <div className="flex justify-center mb-4 sm:mb-5">
             <BrandLogo variant="dark" showSlogan={false} size="sm" />
@@ -44,12 +44,12 @@ export const CraftPillars = () => {
               className="group relative rounded-2xl sm:rounded-3xl overflow-hidden
                 shadow-sm hover:shadow-floating transition-all duration-500 cursor-pointer
                 border-2 border-sand-light hover:border-gold/40 focus:outline-none focus:ring-2 focus:ring-gold/50
-                bg-white aspect-square sm:aspect-auto sm:h-56 md:h-64"
+                bg-sand aspect-square sm:aspect-auto sm:h-56 md:h-64"
             >
               {/* Vista en reposo */}
               <div className="absolute inset-0 p-4 sm:p-5 flex flex-col justify-between
                 transition-opacity duration-500 group-hover:opacity-0 group-focus:opacity-0
-                bg-gradient-to-b from-white to-sand-light/60">
+                bg-gradient-to-b from-sand to-sand-light/60">
                 <div className="flex flex-col items-center text-center gap-2 sm:gap-3 mt-2 sm:mt-3">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-teal/10 text-teal flex items-center justify-center">
                     <Icon name={item.icon} className="w-5 h-5 sm:w-6 sm:h-6" />
