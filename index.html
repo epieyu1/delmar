@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Título y SEO optimizado -->
+    <title>Del Mar Artesanías • Dibulla, La Guajira | Mochilas y Diseños Ancestrales</title>
+    <meta name="description" content="Artesanías hechas a mano en Dibulla, La Guajira. Mochilas Wayúu a un solo hilo, vestidos de baño en crochet, mantas y souvenirs con el alma del Caribe colombiano. Envíos a toda Colombia." />
+    <meta name="keywords" content="artesanías, mochilas wayúu, dibulla, la guajira, vestidos de baño crochet, mantas tradicionales, souvenirs marinos, colombia" />
+    <meta name="author" content="Del Mar Artesanías" />
+    <meta name="theme-color" content="#0A2A43" />
+
+    <!-- Open Graph / Redes Sociales (WhatsApp, Facebook, Instagram) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Del Mar Artesanías" />
+    <meta property="og:title" content="Del Mar Artesanías • Dibulla, La Guajira" />
+    <meta property="og:description" content="Historias que nacen junto al mar. Piezas artesanales Wayúu tejidas a mano con amor y tradición ancestral en Dibulla, La Guajira." />
+    <meta property="og:image" content="/fundadora.jpg" />
+    <meta property="og:locale" content="es_CO" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Del Mar Artesanías • Dibulla, La Guajira" />
+    <meta name="twitter:description" content="Historias que nacen junto al mar. Descubre nuestra colección de mochilas y prendas artesanales." />
+    <meta name="twitter:image" content="/fundadora.jpg" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Google Fonts con Preconnect para máximo rendimiento CWV/LCP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS con tema personalizado de Del Mar Artesanías -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              sand: '#FDFBF7',
+              'sand-light': '#F5EFE6',
+              'deep-blue': '#0A2A43',
+              teal: '#1C646D',
+              'teal-dark': '#144B52',
+              terracotta: '#99482F',
+              gold: '#E89945',
+              'wa-green': '#25D366',
+              'wa-green-hover': '#20ba5a'
+            },
+            fontFamily: {
+              sans: ['Montserrat', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+              script: ['Dancing Script', 'cursive']
+            },
+            boxShadow: {
+              'coastal': '0 10px 30px -10px rgba(10, 42, 67, 0.08)',
+              'floating': '0 20px 40px -15px rgba(10, 42, 67, 0.15)'
+            }
+          }
+        }
+      };
+    </script>
+  </head>
+  <body class="bg-sand text-deep-blue antialiased selection:bg-gold selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

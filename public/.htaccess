@@ -1,0 +1,71 @@
+# ==============================================================================
+# DEL MAR ARTESANÍAS - CONFIGURACIÓN HOSTINGER (APACHE / LITESPEED)
+# ==============================================================================
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Forzar HTTPS (seguridad SSL)
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Enrutamiento React SPA: Si el archivo o carpeta solicitado no existe físicamente,
+  # redirigir limpiamente a index.html (evita error 404 al recargar)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# ==============================================================================
+# SEGURIDAD Y CABECERAS HTTP
+# ==============================================================================
+<IfModule mod_headers.c>
+  # Previene ataques de Clickjacking
+  Header set X-Frame-Options "SAMEORIGIN"
+
+  # Previene sniffing de tipo MIME
+  Header set X-Content-Type-Options "nosniff"
+
+  # Protección XSS heredada para navegadores antiguos
+  Header set X-XSS-Protection "1; mode=block"
+
+  # Política de Referrer segura
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Política de permisos para restringir acceso no necesario a hardware
+  Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+  # No cachear index.html para asegurar que los usuarios reciban cambios inmediatamente
+  <FilesMatch "^index\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </FilesMatch>
+
+  # Cache agresivo para archivos estáticos inmutables generados por Vite
+  <FilesMatch "\.(css|js|woff2|woff|ttf|svg|png|jpg|jpeg|webp|gif|ico)$">
+    Header set Cache-Control "max-age=31536000, public, immutable"
+  </FilesMatch>
+</IfModule>
+
+# ==============================================================================
+# COMPRESIÓN GZIP / DEFLATE (MÁXIMA VELOCIDAD DE CARGA)
+# ==============================================================================
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Prevenir acceso a archivos ocultos o de configuración
+<FilesMatch "^\.">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
