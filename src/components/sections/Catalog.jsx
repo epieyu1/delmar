@@ -109,20 +109,22 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
                   aria-label={`Ver detalles de ${product.name}`}
                 >
                   <ImageWithFallback
-                    src={product.image}
-                    fallback={product.fallbackImage}
+                    src={product.images[0]}
+                    fallback={product.images[1] ?? product.images[0]}
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
-                  <span className="absolute top-3 left-3 bg-deep-blue/90 backdrop-blur-sm text-gold text-[10px] sm:text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                    {product.tag}
-                  </span>
                 </div>
 
                 {/* Contenido de la tarjeta */}
                 <div className="flex flex-1 flex-col justify-between p-3 sm:p-5">
                   <div>
+                    <div className="mb-2">
+                      <span className="inline-flex max-w-full items-center whitespace-normal break-words rounded-full bg-deep-blue/90 px-2 py-1 text-[10px] font-bold uppercase leading-tight tracking-wide text-gold sm:text-[11px] sm:tracking-wider">
+                        {product.tag}
+                      </span>
+                    </div>
                     <span className="text-[10px] sm:text-[11px] font-semibold text-teal tracking-widest uppercase">
                       {product.category}
                     </span>

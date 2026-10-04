@@ -39,8 +39,8 @@ export const HeroCarousel = () => {
   );
 
   useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(() => setCurrentSlide((index) => (index + 1) % slides.length), 7000);
+    if (isPaused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const timer = setInterval(() => setCurrentSlide((index) => (index + 1) % slides.length), 9000);
     return () => clearInterval(timer);
   }, [isPaused, slides.length]);
 
@@ -65,7 +65,7 @@ export const HeroCarousel = () => {
             <div
               key={slide.id}
               inert={!isActive}
-              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${isActive ? 'z-10 opacity-100' : 'pointer-events-none opacity-0'}`}
+              className={`hero-carousel-slide absolute inset-0 ${isActive ? 'z-10 opacity-100' : 'pointer-events-none opacity-0'}`}
               aria-hidden={!isActive}
             >
               <ImageWithFallback
