@@ -1,141 +1,180 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import ImageWithFallback from '../common/ImageWithFallback';
 import Icon from '../common/Icon';
 import WhatsAppIcon from '../common/WhatsAppIcon';
 import { BRAND_STORY } from '../../data/story';
+import { INITIAL_PRODUCTS } from '../../data/products';
+import { BRAND_PHOTOGRAPHS } from '../../data/brandImages';
 import { getWhatsAppLink } from '../../constants/whatsapp';
+import { formatCurrency } from '../../utils/formatters';
 
-export const HeroCarousel = () => {
+export const HeroCarousel = ({ onSelectProduct }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const slides = useMemo(
-    () => [
-      {
-        id: 1,
-        title: 'Historias que nacen junto al mar.',
-        ctaText: 'Ver colección',
-        ctaLink: '#catalogo',
-        image: '/fundadora.jpg'
-      },
-      {
-        id: 2,
-        title: 'Artesanías con raíces que viajan contigo.',
-        ctaText: 'Conoce nuestra historia',
-        ctaLink: '#historia',
-        image: '/fundadora.jpg'
-      },
-      {
-        id: 3,
-        title: 'Del mar de Dibulla a tu hogar.',
-        ctaText: 'Consultar por WhatsApp',
-        ctaLink: getWhatsAppLink(
-          'Hola Del Mar Artesanías 🌊, deseo consultar sobre sus artesanías de Dibulla, La Guajira.'
-        ),
-        image: '/fundadora.jpg',
-        isExternal: true
-      }
-    ],
-    []
-  );
+  const bannerRef = useRef(null);
+  const touchStartX = useRef(null);
+  const featuredProduct = INITIAL_PRODUCTS[0];
+  const slides = useMemo(() => [
+    {
+      id: 1,
+      title: 'Historias que nacen junto al mar.',
+      ctaText: 'Ver colección',
+      ctaLink: '#catalogo',
+      photo: BRAND_PHOTOGRAPHS[0]
+    },
+    {
+      id: 2,
+      title: 'Artesanías con raíces que viajan contigo.',
+      ctaText: 'Conoce nuestra historia',
+      ctaLink: '#historia',
+      photo: BRAND_PHOTOGRAPHS[1]
+    },
+    {
+      id: 3,
+      title: 'Del mar de Dibulla a tu hogar.',
+      ctaText: 'Consultar por WhatsApp',
+      ctaLink: getWhatsAppLink('Hola Del Mar Artesanías 🌊, deseo consultar sobre sus artesanías de Dibulla, La Guajira.'),
+      isExternal: true,
+      photo: BRAND_PHOTOGRAPHS[2]
+    },
+    {
+      id: 4,
+      title: BRAND_STORY.sloganPrimary,
+      ctaText: 'Conoce nuestra historia',
+      ctaLink: '#historia',
+      photo: BRAND_PHOTOGRAPHS[3]
+    }
+  ], []);
 
   useEffect(() => {
-    if (isPaused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const timer = setInterval(() => setCurrentSlide((index) => (index + 1) % slides.length), 9000);
-    return () => clearInterval(timer);
+    if (isPaused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const timer = window.setInterval(() => {
+      setCurrentSlide((index) => (index + 1) % slides.length);
+    }, 9000);
+    return () => window.clearInterval(timer);
   }, [isPaused, slides.length]);
 
-  const goToPreviousSlide = () =>
-    setCurrentSlide((index) => (index - 1 + slides.length) % slides.length);
-  const goToNextSlide = () => setCurrentSlide((index) => (index + 1) % slides.length);
+  const handleBannerTouchStart = (event) => {
+    touchStartX.current = event.changedTouches[0]?.clientX ?? null;
+    setIsPaused(true);
+  };
+
+  const handleBannerTouchEnd = (event) => {
+    const startX = touchStartX.current;
+    const endX = event.changedTouches[0]?.clientX;
+    const swipeDistance = startX === null || endX === undefined ? 0 : startX - endX;
+    const swipeThreshold = (bannerRef.current?.clientWidth ?? 0) * 0.12;
+
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      setCurrentSlide((index) => (index + (swipeDistance > 0 ? 1 : -1) + slides.length) % slides.length);
+    }
+
+    touchStartX.current = null;
+    setIsPaused(false);
+  };
+
+  const handleBannerTouchCancel = () => {
+    touchStartX.current = null;
+    setIsPaused(false);
+  };
 
   return (
     <section
       id="inicio"
-      className="relative w-full overflow-hidden bg-deep-blue"
+      className="hero-section"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      onTouchStart={() => setIsPaused(true)}
-      onTouchEnd={() => setIsPaused(false)}
-      aria-label="Carrusel principal Del Mar"
+      aria-label="Presentación de Del Mar Artesanías"
     >
-      <div className="hero-carousel-frame relative min-h-[550px] w-full overflow-hidden bg-deep-blue text-sand lg:min-h-[680px]">
-        {slides.map((slide, index) => {
-          const isActive = index === currentSlide;
-          return (
-            <div
-              key={slide.id}
-              inert={!isActive}
-              className={`hero-carousel-slide absolute inset-0 ${isActive ? 'z-10 opacity-100' : 'pointer-events-none opacity-0'}`}
-              aria-hidden={!isActive}
-            >
-              <ImageWithFallback
-                src={slide.image}
-                fallback="/fundadora-salinas.jpg"
-                alt="Mujer wayúu frente al mar en La Guajira"
-                width={768}
-                height={1024}
-                className="absolute inset-0 h-full w-full object-cover object-center md:object-[center_75%]"
-                loading={index === 0 ? 'eager' : 'lazy'}
-                fetchPriority={index === 0 ? 'high' : 'auto'}
-                decoding="async"
-              />
-              <div className="absolute inset-0 z-10 bg-gradient-to-r from-deep-blue/85 via-deep-blue/55 to-transparent" />
-              <div className="absolute inset-0 z-20 mx-auto flex h-full w-full max-w-7xl flex-col items-center justify-center px-5 py-12 text-center sm:px-8 md:items-start md:px-6 md:py-0 md:text-left">
-                <div className="flex w-full max-w-lg flex-col items-center gap-3 sm:gap-4 md:w-[28%] md:items-start">
-                  <span className="inline-flex max-w-full items-center rounded-full border border-gold/40 bg-deep-blue/35 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-gold shadow-sm backdrop-blur-sm sm:text-xs">
-                    {BRAND_STORY.contactSummary.location}
-                  </span>
-                  <h1 className="font-serif text-2xl font-semibold leading-tight text-sand drop-shadow-md sm:text-3xl md:text-4xl lg:text-5xl">
-                    {slide.title}
-                  </h1>
-                  <p className="max-w-prose text-sm leading-relaxed text-sand/95 drop-shadow sm:text-base">
-                    {BRAND_STORY.paragraphs[0]}
-                  </p>
+      <div className="page-shell hero-layout">
+        <div
+          ref={bannerRef}
+          className="hero-banner"
+          role="group"
+          aria-roledescription="carrusel"
+          aria-label="Presentación de Del Mar Artesanías"
+          onTouchStart={handleBannerTouchStart}
+          onTouchEnd={handleBannerTouchEnd}
+          onTouchCancel={handleBannerTouchCancel}
+        >
+          {slides.map((slide, index) => {
+            const isActive = index === currentSlide;
+            return (
+              <div
+                key={slide.id}
+                className={'hero-carousel__slide' + (isActive ? ' is-active' : '')}
+                inert={!isActive}
+                aria-hidden={!isActive}
+              >
+                <ImageWithFallback
+                  src={slide.photo.src}
+                  alt={slide.photo.alt}
+                  className="hero-banner__image"
+                  style={{ objectPosition: slide.photo.position }}
+                  width="1200"
+                  height="1600"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={index === 0 ? 'high' : 'auto'}
+                />
+                <div className="hero-banner__veil" />
+                <div className="hero-banner__content" aria-live={isActive ? 'polite' : undefined}>
+                  <span className="eyebrow hero-location">{BRAND_STORY.contactSummary.location}</span>
+                  <h1 className="editorial-title hero-title">{slide.title}</h1>
+                  <p className="hero-description">{BRAND_STORY.paragraphs[0]}</p>
                   <a
                     href={slide.ctaLink}
                     target={slide.isExternal ? '_blank' : undefined}
                     rel={slide.isExternal ? 'noopener noreferrer' : undefined}
-                    className={`button-interaction inline-flex min-h-11 w-fit items-center justify-center gap-2 rounded-full px-5 py-3 text-xs font-semibold shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-deep-blue sm:text-sm md:text-base ${slide.isExternal ? 'bg-wa-green text-deep-blue hover:bg-wa-green-hover' : 'bg-gold text-deep-blue hover:bg-gold/90'}`}
+                    className={slide.isExternal ? 'button button--whatsapp' : 'button button--light'}
                   >
-                    {slide.isExternal && <WhatsAppIcon className="h-4 w-4" aria-hidden="true" />}
+                    {slide.isExternal && <WhatsAppIcon className="icon-16" />}
                     <span>{slide.ctaText}</span>
-                    {!slide.isExternal && <Icon name="arrow-right" className="h-4 w-4" aria-hidden="true" />}
+                    {!slide.isExternal && <Icon name="arrow-right" className="icon-16" />}
                   </a>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
 
-        <div className="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2 items-center justify-center gap-2">
-          {slides.map((slide, index) => (
-            <button
-              key={slide.id}
-              type="button"
-              onClick={() => setCurrentSlide(index)}
-              className={`button-interaction h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-deep-blue ${index === currentSlide ? 'w-7 bg-gold' : 'w-2 bg-sand/60 hover:bg-sand'}`}
-              aria-label={`Ir a la diapositiva ${index + 1}`}
-              aria-current={index === currentSlide ? 'true' : undefined}
-            />
-          ))}
+          <div className="hero-carousel-controls" aria-label="Controles de presentación">
+            <div className="hero-carousel-dots">
+              {slides.map((slide, index) => (
+                <button
+                  key={slide.id}
+                  type="button"
+                  onClick={() => setCurrentSlide(index)}
+                  className={index === currentSlide ? 'is-active' : ''}
+                  aria-label={'Ir a la diapositiva ' + (index + 1)}
+                  aria-current={index === currentSlide ? 'true' : undefined}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
-        <button
-          type="button"
-          onClick={goToPreviousSlide}
-          className="button-interaction absolute bottom-4 left-4 z-30 hidden items-center justify-center rounded-full border border-sand/30 bg-deep-blue/70 p-3 text-sand backdrop-blur-sm transition-colors hover:bg-deep-blue focus:outline-none focus:ring-2 focus:ring-gold md:flex"
-          aria-label="Diapositiva anterior"
-        >
-          <Icon name="chevron-left" className="h-5 w-5" aria-hidden="true" />
-        </button>
-        <button
-          type="button"
-          onClick={goToNextSlide}
-          className="button-interaction absolute bottom-4 left-16 z-30 hidden items-center justify-center rounded-full border border-sand/30 bg-deep-blue/70 p-3 text-sand backdrop-blur-sm transition-colors hover:bg-deep-blue focus:outline-none focus:ring-2 focus:ring-gold md:flex"
-          aria-label="Siguiente diapositiva"
-        >
-          <Icon name="chevron-right" className="h-5 w-5" aria-hidden="true" />
-        </button>
+        <article className="featured-card">
+          <div className="featured-card__copy">
+            <span className="eyebrow featured-card__eyebrow">Pieza destacada · {featuredProduct.category}</span>
+            <h2>{featuredProduct.name}</h2>
+            <p>{featuredProduct.shortDesc}</p>
+            <strong className="featured-card__price">{formatCurrency(featuredProduct.price)}</strong>
+            <button type="button" className="featured-card__link" onClick={() => onSelectProduct(featuredProduct)}>
+              Ver pieza <Icon name="arrow-right" className="icon-16" />
+            </button>
+          </div>
+          <div className="featured-card__image-wrap">
+            <ImageWithFallback
+              src={featuredProduct.images[0]}
+              fallback={featuredProduct.images[1]}
+              alt={featuredProduct.name}
+              className="featured-card__image"
+              width="480"
+              height="480"
+              loading="eager"
+              fetchPriority="high"
+            />
+          </div>
+        </article>
       </div>
     </section>
   );

@@ -13,27 +13,17 @@ export const App = () => {
   const [productsList] = useState(INITIAL_PRODUCTS);
 
   return (
-    <div className="min-h-screen flex flex-col bg-sand text-deep-blue antialiased selection:bg-gold selection:text-sand">
+    <div className="app-shell">
       <Navbar />
-      
-      <main className="flex-1">
-        <HeroCarousel />
+      <main className="site-main">
+        <HeroCarousel onSelectProduct={setSelectedProduct} />
         <CraftPillars />
-        <Catalog
-          productsList={productsList}
-          onSelectProduct={(prod) => setSelectedProduct(prod)}
-        />
+        <Catalog productsList={productsList} onSelectProduct={setSelectedProduct} />
         <BrandStory />
       </main>
-
       <Footer />
-
-      {/* Modal de Detalle de Producto */}
       {selectedProduct && (
-        <ProductModal
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
-        />
+        <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
       )}
     </div>
   );

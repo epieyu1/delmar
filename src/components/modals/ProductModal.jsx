@@ -5,16 +5,7 @@ import WhatsAppIcon from '../common/WhatsAppIcon';
 import { getProductInquiryMessage } from '../../constants/whatsapp';
 import { formatCurrency } from '../../utils/formatters';
 
-const ProductGallery = ({
-  product,
-  selectedImageIndex,
-  onSelectImage,
-  isZoomOpen,
-  onOpenZoom,
-  onCloseZoom,
-  onPreviousImage,
-  onNextImage
-}) => {
+const ProductGallery = ({ product, selectedImageIndex, onSelectImage, isZoomOpen, onOpenZoom, onCloseZoom, onPreviousImage, onNextImage }) => {
   const imageButtonRef = useRef(null);
   const closeZoomButtonRef = useRef(null);
   const wasZoomOpen = useRef(false);
@@ -29,49 +20,38 @@ const ProductGallery = ({
   }, [isZoomOpen]);
 
   return (
-    <div>
+    <div className="product-gallery">
       <button
         type="button"
         onClick={onOpenZoom}
         ref={imageButtonRef}
-        className="group relative block aspect-[4/5] w-full overflow-hidden rounded-2xl bg-sand-light focus:outline-none focus:ring-2 focus:ring-gold/60"
-        aria-label={`Ampliar imagen ${selectedImageIndex + 1} de ${product.name}`}
+        className="product-gallery__main"
+        aria-label={'Ampliar imagen ' + (selectedImageIndex + 1) + ' de ' + product.name}
       >
         <ImageWithFallback
           src={activeImage}
           fallback={fallbackImage}
-          alt={`${product.name}, vista ${selectedImageIndex + 1}`}
+          alt={product.name + ', vista ' + (selectedImageIndex + 1)}
           width="600"
           height="800"
-          className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"
+          className="product-gallery__image"
           loading="eager"
         />
-        <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-deep-blue/80 px-3 py-1.5 text-xs font-medium text-sand opacity-100 shadow-sm sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100">
-          Ampliar imagen
-        </span>
+        <span className="product-gallery__hint">Ampliar imagen</span>
       </button>
 
       {images.length > 1 && (
-        <div className="mt-3 grid grid-cols-4 gap-2" role="group" aria-label="Más imágenes del producto">
+        <div className="product-gallery__thumbs" role="group" aria-label="Más imágenes del producto">
           {images.map((image, index) => (
             <button
               key={image}
               type="button"
               onClick={() => onSelectImage(index)}
-              aria-label={`Ver imagen ${index + 1} de ${product.name}`}
+              aria-label={'Ver imagen ' + (index + 1) + ' de ' + product.name}
               aria-pressed={index === selectedImageIndex}
-              className={`aspect-square overflow-hidden rounded-xl border-2 bg-sand-light transition-colors focus:outline-none focus:ring-2 focus:ring-gold/60 ${
-                index === selectedImageIndex ? 'border-teal' : 'border-transparent hover:border-gold/60'
-              }`}
+              className={index === selectedImageIndex ? 'product-gallery__thumb is-active' : 'product-gallery__thumb'}
             >
-              <ImageWithFallback
-                src={image}
-                fallback={images[(index + 1) % images.length]}
-                alt=""
-                width="96"
-                height="96"
-                className="h-full w-full object-cover"
-              />
+              <ImageWithFallback src={image} fallback={images[(index + 1) % images.length]} alt="" width="96" height="96" />
             </button>
           ))}
         </div>
@@ -79,10 +59,10 @@ const ProductGallery = ({
 
       {isZoomOpen && (
         <div
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-deep-blue/95 p-2 sm:p-8"
+          className="photo-zoom"
           role="dialog"
           aria-modal="true"
-          aria-label={`Imagen ampliada de ${product.name}`}
+          aria-label={'Imagen ampliada de ' + product.name}
           onKeyDown={(event) => {
             if (event.key !== 'Tab') return;
             const controls = event.currentTarget.querySelectorAll('button:not([disabled])');
@@ -96,41 +76,31 @@ const ProductGallery = ({
               firstControl.focus();
             }
           }}
-          onClick={(event) => {
-            if (event.target === event.currentTarget) onCloseZoom();
-          }}
+          onClick={(event) => { if (event.target === event.currentTarget) onCloseZoom(); }}
         >
-          <button
-            type="button"
-            onClick={onCloseZoom}
-            ref={closeZoomButtonRef}
-            className="button-interaction absolute right-4 top-4 rounded-full bg-sand px-3 py-3 text-deep-blue shadow-lg focus:outline-none focus:ring-2 focus:ring-gold sm:right-6 sm:top-6"
-            aria-label="Cerrar imagen ampliada"
-          >
-            <Icon name="x" className="h-5 w-5" />
+          <button type="button" onClick={onCloseZoom} ref={closeZoomButtonRef} className="photo-zoom__close" aria-label="Cerrar imagen ampliada">
+            <Icon name="x" className="icon-20" />
           </button>
           {images.length > 1 && (
-            <button type="button" onClick={onPreviousImage} className="button-interaction absolute left-2 rounded-full bg-sand/95 p-3 text-deep-blue shadow-lg focus:outline-none focus:ring-2 focus:ring-gold sm:left-6" aria-label="Imagen anterior">
-              <Icon name="chevron-left" />
+            <button type="button" onClick={onPreviousImage} className="photo-zoom__previous" aria-label="Imagen anterior">
+              <Icon name="chevron-left" className="icon-20" />
             </button>
           )}
           <ImageWithFallback
             src={activeImage}
             fallback={fallbackImage}
-            alt={`${product.name}, imagen ampliada ${selectedImageIndex + 1}`}
+            alt={product.name + ', imagen ampliada ' + (selectedImageIndex + 1)}
             width="1200"
             height="1600"
-            className="max-h-[86vh] max-w-[90vw] object-contain"
+            className="photo-zoom__image"
             loading="eager"
           />
           {images.length > 1 && (
-            <button type="button" onClick={onNextImage} className="button-interaction absolute right-2 rounded-full bg-sand/95 p-3 text-deep-blue shadow-lg focus:outline-none focus:ring-2 focus:ring-gold sm:right-6" aria-label="Imagen siguiente">
-              <Icon name="chevron-right" />
+            <button type="button" onClick={onNextImage} className="photo-zoom__next" aria-label="Imagen siguiente">
+              <Icon name="chevron-right" className="icon-20" />
             </button>
           )}
-          <span className="absolute bottom-4 rounded-full bg-deep-blue/80 px-4 py-2 text-sm font-medium text-sand" aria-live="polite">
-            {selectedImageIndex + 1} / {images.length}
-          </span>
+          <span className="photo-zoom__count" aria-live="polite">{selectedImageIndex + 1} / {images.length}</span>
         </div>
       )}
     </div>
@@ -142,25 +112,20 @@ export const ProductModal = ({ product, onClose }) => {
   const [isZoomOpen, setIsZoomOpen] = useState(false);
 
   useEffect(() => {
-    if (!product) return;
-
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
+    if (!product) return undefined;
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
         if (isZoomOpen) setIsZoomOpen(false);
         else onClose();
       }
-
-      if (isZoomOpen && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
-        e.preventDefault();
-        const direction = e.key === 'ArrowRight' ? 1 : -1;
+      if (isZoomOpen && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+        event.preventDefault();
+        const direction = event.key === 'ArrowRight' ? 1 : -1;
         setSelectedImageIndex((index) => (index + direction + product.images.length) % product.images.length);
       }
     };
-
-    // Prevenir scroll en el fondo mientras el modal está abierto
     document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
-
     return () => {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
@@ -173,7 +138,6 @@ export const ProductModal = ({ product, onClose }) => {
   }, [product?.id]);
 
   if (!product) return null;
-
   const waMsg = getProductInquiryMessage(product);
   const productDetails = product.details ?? [
     { label: 'Técnica', value: product.technique },
@@ -182,26 +146,17 @@ export const ProductModal = ({ product, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-deep-blue/70 backdrop-blur-sm animate-fade-in"
+      className="modal-backdrop"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-product-title"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
+      onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}
     >
-      <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-sand-light bg-sand p-5 shadow-floating sm:p-8">
-        {/* Botón cerrar */}
-        <button
-          type="button"
-          onClick={onClose}
-          className="button-interaction absolute right-4 top-4 z-10 rounded-full bg-sand-light p-2.5 text-deep-blue transition-colors hover:bg-deep-blue hover:text-sand focus:outline-none focus:ring-2 focus:ring-gold/50"
-          aria-label="Cerrar ventana de detalle"
-        >
-          <Icon name="x" className="w-5 h-5" />
+      <div className="product-modal">
+        <button type="button" onClick={onClose} className="modal-close" aria-label="Cerrar ventana de detalle">
+          <Icon name="x" className="icon-20" />
         </button>
-
-        <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2">
+        <div className="product-modal__layout">
           <ProductGallery
             key={product.id}
             product={product}
@@ -213,47 +168,20 @@ export const ProductModal = ({ product, onClose }) => {
             onPreviousImage={() => setSelectedImageIndex((index) => (index - 1 + product.images.length) % product.images.length)}
             onNextImage={() => setSelectedImageIndex((index) => (index + 1) % product.images.length)}
           />
-
-          {/* Información detallada */}
-          <div className="space-y-4">
-            <div>
-              <span className="text-[11px] sm:text-xs font-semibold text-teal tracking-widest uppercase">
-                {product.category} • {product.tag}
-              </span>
-              <h3
-                id="modal-product-title"
-                className="font-serif font-bold text-xl sm:text-2xl text-deep-blue mt-1"
-              >
-                {product.name}
-              </h3>
-            </div>
-
-            <p className="font-sans font-bold text-lg sm:text-xl text-terracotta">
-              {formatCurrency(product.price)}
-            </p>
-
-            <p className="text-xs sm:text-sm text-deep-blue/80 leading-relaxed">
-              {product.description}
-            </p>
-
+          <div className="product-modal__details">
+            <span className="eyebrow">{product.category} · {product.tag}</span>
+            <h2 id="modal-product-title">{product.name}</h2>
+            <p className="product-modal__price">{formatCurrency(product.price)}</p>
+            <p className="product-modal__description">{product.description}</p>
             {productDetails.length > 0 && (
-              <div className="space-y-2 border-t border-sand-light pt-3 text-[11px] text-deep-blue/70 sm:text-sm">
+              <div className="product-modal__facts">
                 {productDetails.map(({ label, value }) => (
-                  <p key={label}>
-                    <strong className="text-deep-blue">{label}:</strong> {value}
-                  </p>
+                  <p key={label}><strong>{label}:</strong> {value}</p>
                 ))}
               </div>
             )}
-
-            <a
-              href={waMsg}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button-interaction mt-4 inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-wa-green py-3.5 text-sm font-semibold text-deep-blue shadow-md transition-all hover:bg-wa-green-hover focus:outline-none focus:ring-2 focus:ring-wa-green/50 sm:text-base"
-            >
-              <WhatsAppIcon className="w-5 h-5" />
-              <span>Solicitar por WhatsApp</span>
+            <a href={waMsg} target="_blank" rel="noopener noreferrer" className="button button--whatsapp product-modal__order">
+              <WhatsAppIcon className="icon-18" /><span>Solicitar por WhatsApp</span>
             </a>
           </div>
         </div>
@@ -261,4 +189,5 @@ export const ProductModal = ({ product, onClose }) => {
     </div>
   );
 };
+
 export default ProductModal;

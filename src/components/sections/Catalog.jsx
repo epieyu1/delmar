@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import ImageWithFallback from '../common/ImageWithFallback';
 import Icon from '../common/Icon';
 import WhatsAppIcon from '../common/WhatsAppIcon';
@@ -8,60 +8,48 @@ import { formatCurrency } from '../../utils/formatters';
 
 export const Catalog = ({ productsList, onSelectProduct }) => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
+  const [query, setQuery] = useState('');
 
   const filteredProducts = useMemo(() => {
+    const normalizedQuery = query.trim().toLocaleLowerCase('es');
     return productsList.filter((product) => {
-      return selectedCategory === 'Todos' || product.category === selectedCategory;
+      const categoryMatches = selectedCategory === 'Todos' || product.category === selectedCategory;
+      const searchableText = [product.name, product.category, product.tag, product.shortDesc]
+        .filter(Boolean)
+        .join(' ')
+        .toLocaleLowerCase('es');
+      return categoryMatches && (!normalizedQuery || searchableText.includes(normalizedQuery));
     });
-  }, [selectedCategory, productsList]);
+  }, [query, selectedCategory, productsList]);
 
   return (
-    <section id="catalogo" className="py-10 sm:py-16 lg:py-20 bg-sand" aria-label="Catálogo de productos">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Cabecera del catálogo */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-          <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-terracotta">
-            Colección Exclusiva
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-deep-blue mt-2 mb-4">
-            Historias Teñidas por el Mar
-          </h2>
-          <p className="text-sm sm:text-base text-deep-blue/75 font-sans">
-            Explora nuestra selección de creaciones tejidas con pasión en Dibulla. Haz clic en cualquier pieza para conocer sus detalles o hacer tu pedido directo.
-          </p>
+    <section id="catalogo" className="catalog-section section-space" aria-label="Catálogo de productos">
+      <div className="page-shell">
+        <div className="section-heading catalog-heading">
+          <span className="eyebrow">Colección exclusiva</span>
+          <h2 className="editorial-title editorial-title--section">Historias teñidas por el mar</h2>
+          <p>Explora nuestra selección de creaciones tejidas con pasión en Dibulla. Haz clic en cualquier pieza para conocer sus detalles o hacer tu pedido directo.</p>
         </div>
 
-        {/* Filtros por Categoría */}
-        <div className="mb-8 sm:mb-10">
-          <div className="relative mx-auto w-full max-w-sm sm:hidden">
-            <label htmlFor="catalog-category" className="sr-only">
-              Filtrar por categoría
-            </label>
-            <select
-              id="catalog-category"
-              value={selectedCategory}
-              onChange={(event) => setSelectedCategory(event.target.value)}
-              className="w-full appearance-none rounded-xl border border-sand-light bg-sand px-4 py-3 pr-10 text-sm font-medium text-deep-blue shadow-sm focus:outline-none focus:ring-2 focus:ring-gold/50"
-            >
-              {CATEGORIES.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-            <Icon
-              name="chevron-right"
-              className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 rotate-90 text-deep-blue"
-              aria-hidden="true"
+        <div className="catalog-tools">
+          <label className="catalog-search" htmlFor="catalog-search">
+            <input
+              id="catalog-search"
+              type="search"
+              aria-label="Buscar en el catálogo"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Buscar una pieza"
+              autoComplete="off"
             />
-          </div>
+            {query && (
+              <button type="button" onClick={() => setQuery('')} aria-label="Limpiar búsqueda">
+                <Icon name="x" className="icon-16" />
+              </button>
+            )}
+          </label>
 
-          <div
-            className="mx-auto hidden max-w-5xl flex-wrap items-center justify-center gap-2 sm:flex"
-            role="tablist"
-            aria-label="Filtro de categorías de productos"
-          >
+          <div className="category-filters" role="tablist" aria-label="Filtrar por categoría">
             {CATEGORIES.map((category) => {
               const isSelected = selectedCategory === category;
               return (
@@ -71,11 +59,7 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
                   role="tab"
                   aria-selected={isSelected}
                   onClick={() => setSelectedCategory(category)}
-                  className={`button-interaction rounded-full px-4 py-2.5 text-xs font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gold/50 sm:px-5 sm:text-sm ${
-                    isSelected
-                      ? 'bg-deep-blue text-sand shadow-md'
-                      : 'bg-sand-light text-deep-blue/80 hover:bg-teal/10 hover:text-teal'
-                  }`}
+                  className={isSelected ? 'category-pill is-active' : 'category-pill'}
                 >
                   {category}
                 </button>
@@ -84,101 +68,74 @@ export const Catalog = ({ productsList, onSelectProduct }) => {
           </div>
         </div>
 
-        {/* Grilla responsiva de productos */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 lg:gap-8">
-          {filteredProducts.map((product) => {
-            const waMsg = getProductOrderMessage(product);
+        <p className="catalog-count" aria-live="polite">
+          {filteredProducts.length} {filteredProducts.length === 1 ? 'pieza' : 'piezas'}
+        </p>
 
-            return (
-              <article
-                key={product.id}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-sand-light bg-sand shadow-sm transition-all duration-300 hover:shadow-coastal"
-              >
-                {/* Contenedor de imagen cuadrado y contenido sin desbordamiento */}
-                <div
-                  className="relative aspect-square overflow-hidden bg-sand-light cursor-pointer select-none"
-                  onClick={() => onSelectProduct(product)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      onSelectProduct(product);
-                    }
-                  }}
-                  aria-label={`Ver detalles de ${product.name}`}
-                >
-                  <ImageWithFallback
-                    src={product.images[0]}
-                    fallback={product.images[1] ?? product.images[0]}
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                </div>
-
-                {/* Contenido de la tarjeta */}
-                <div className="flex flex-1 flex-col justify-between p-3 sm:p-5">
-                  <div>
-                    <div className="mb-2">
-                      <span className="inline-flex max-w-full items-center whitespace-normal break-words rounded-full bg-deep-blue/90 px-2 py-1 text-[10px] font-bold uppercase leading-tight tracking-wide text-gold sm:text-[11px] sm:tracking-wider">
-                        {product.tag}
-                      </span>
-                    </div>
-                    <span className="text-[10px] sm:text-[11px] font-semibold text-teal tracking-widest uppercase">
-                      {product.category}
+        {filteredProducts.length > 0 ? (
+          <div className="products-grid">
+            {filteredProducts.map((product) => {
+              const waMsg = getProductOrderMessage(product);
+              return (
+                <article className="product-card" key={product.id}>
+                  <button
+                    type="button"
+                    className="product-card__image-button"
+                    onClick={() => onSelectProduct(product)}
+                    aria-label={'Ver detalles de ' + product.name}
+                  >
+                    <span className="product-card__image-wrap">
+                      <ImageWithFallback
+                        src={product.images[0]}
+                        fallback={product.images[1] ?? product.images[0]}
+                        alt={product.name}
+                        className="product-card__image"
+                        width="640"
+                        height="640"
+                        loading="lazy"
+                      />
                     </span>
-                    <h3
-                      onClick={() => onSelectProduct(product)}
-                      className="font-serif font-bold text-sm sm:text-base text-deep-blue mt-1 mb-2 hover:text-terracotta transition-colors cursor-pointer line-clamp-1"
-                    >
+                    <span className="product-card__tag">{product.tag}</span>
+                  </button>
+                  <div className="product-card__body">
+                    <span className="product-card__category">{product.category}</span>
+                    <button type="button" className="product-card__title" onClick={() => onSelectProduct(product)}>
                       {product.name}
-                    </h3>
-                    <p className="text-[11px] sm:text-sm text-deep-blue/70 line-clamp-2 leading-relaxed mb-4">
-                      {product.shortDesc}
-                    </p>
-                  </div>
-
-                  {/* Fila de precio y acciones */}
-                  <div className="pt-3 border-t border-sand-light flex items-center justify-between mt-2">
-                    <div>
-                      <span className="text-[10px] sm:text-[11px] text-deep-blue/50 block font-medium">
-                        Precio
-                      </span>
-                      <span className="font-sans font-bold text-sm sm:text-base text-terracotta">
-                        {formatCurrency(product.price)}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <button
-                        type="button"
-                        onClick={() => onSelectProduct(product)}
-                        className="button-interaction rounded-lg p-2 text-deep-blue transition-colors hover:bg-sand-light focus:outline-none focus:ring-2 focus:ring-gold/50"
-                        title="Ver Detalles de la pieza"
-                        aria-label={`Ver detalles de ${product.name}`}
-                      >
-                        <Icon name="eye" className="w-4 h-4" />
-                      </button>
+                    </button>
+                    <p className="product-card__description">{product.shortDesc}</p>
+                    <div className="product-card__bottom">
+                      <div className="product-card__price">
+                        <span>Precio</span>
+                        <strong>{formatCurrency(product.price)}</strong>
+                      </div>
                       <a
                         href={waMsg}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="button-interaction inline-flex items-center gap-1.5 rounded-xl bg-wa-green px-3.5 py-2 text-[11px] font-semibold text-deep-blue shadow-sm transition-colors hover:bg-wa-green-hover focus:outline-none focus:ring-2 focus:ring-wa-green/50 sm:text-xs"
+                        className="product-order-button"
+                        aria-label={'Pedir ' + product.name + ' por WhatsApp'}
                         title="Pedir por WhatsApp"
                       >
-                        <WhatsAppIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                        <WhatsAppIcon className="icon-16" />
                         <span>Pedir</span>
                       </a>
                     </div>
                   </div>
-                </div>
-              </article>
-            );
-          })}
-        </div>
+                </article>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="catalog-empty" role="status">
+            <p>No encontramos piezas con esos filtros.</p>
+            <button type="button" onClick={() => { setQuery(''); setSelectedCategory('Todos'); }}>
+              Ver todo el catálogo
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
 };
+
 export default Catalog;

@@ -1,99 +1,49 @@
 import { CRAFT_PILLARS } from '../../data/pillars';
+import { BRAND_PHOTOGRAPHS } from '../../data/brandImages';
 import Icon from '../common/Icon';
-import ImageWithFallback from '../common/ImageWithFallback';
-import BrandLogo from '../common/BrandLogo';
 
-export const CraftPillars = () => {
-  return (
-    <section
-      id="pilares"
-      className="relative overflow-hidden bg-sand py-10 sm:py-16 lg:py-20"
-      aria-label="Nuestros 4 Pilares Artesanales"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* Encabezado — estilo flyer */}
-        <div className="mx-auto mb-8 max-w-xl text-center sm:mb-12">
-          {/* Logo pequeño decorativo */}
-          <div className="flex justify-center mb-4 sm:mb-5">
-            <BrandLogo variant="dark" showSlogan={false} size="sm" />
-          </div>
-
-          <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.28em] text-teal block mb-1">
-            Nuestra Esencia
-          </span>
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-deep-blue leading-tight">
-            Historias que nacen junto al mar
-          </h2>
-          <p className="font-serif text-lg sm:text-xl text-gold mt-1">
-            Artesanías con alma y corazón.
-          </p>
-          <div className="flex items-center justify-center gap-2 mt-3">
-            <span className="h-px w-8 bg-gold rounded-full" />
-            <Icon name="diamond" className="w-4 h-4 text-gold" />
-            <span className="h-px w-8 bg-gold rounded-full" />
-          </div>
-        </div>
-
-        {/* Grilla de pilares — 2 cols en móvil, 4 en desktop */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
-          {CRAFT_PILLARS.map((item) => (
-            <div
-              key={item.id}
-              tabIndex={0}
-              className="group relative rounded-2xl sm:rounded-3xl overflow-hidden
-                shadow-sm hover:shadow-floating transition-all duration-500 cursor-pointer
-                border-2 border-sand-light hover:border-gold/40 focus:outline-none focus:ring-2 focus:ring-gold/50
-                bg-sand aspect-square sm:aspect-auto sm:h-56 md:h-64"
-            >
-              {/* Vista en reposo */}
-              <div className="absolute inset-0 p-4 sm:p-5 flex flex-col justify-between
-                transition-opacity duration-500 group-hover:opacity-0 group-focus:opacity-0
-                bg-gradient-to-b from-sand to-sand-light/60">
-                <div className="flex flex-col items-center text-center gap-2 sm:gap-3 mt-2 sm:mt-3">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-teal/10 text-teal flex items-center justify-center">
-                    <Icon name={item.icon} className="w-5 h-5 sm:w-6 sm:h-6" />
-                  </div>
-                  <h3 className="font-serif font-bold text-[11px] sm:text-sm text-deep-blue uppercase tracking-wide leading-tight">
-                    {item.title}
-                  </h3>
-                  <span className="text-[10px] sm:text-[11px] md:text-xs font-bold tracking-widest uppercase text-terracotta
-                    bg-terracotta/10 px-2 py-0.5 rounded-full">
-                    {item.subtitle}
-                  </span>
-                </div>
-                <p className="text-[11px] sm:text-xs md:text-sm text-deep-blue/65 text-center leading-relaxed hidden sm:block">
-                  {item.desc}
-                </p>
-              </div>
-
-              {/* Vista hover — imagen y descripción */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-500">
-                <ImageWithFallback
-                  src={item.image}
-                  fallback={item.fallback}
-                  alt={item.title}
-                  className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-deep-blue via-deep-blue/65 to-transparent
-                  p-4 sm:p-5 flex flex-col justify-end text-sand">
-                  <div className="w-8 h-8 rounded-xl bg-gold/20 text-gold flex items-center justify-center mb-1.5">
-                    <Icon name={item.icon} className="w-4 h-4" />
-                  </div>
-                  <span className="text-gold text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wider mb-1">
-                    {item.title}
-                  </span>
-                  <p className="text-[11px] sm:text-xs md:text-sm text-sand/90 leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+export const CraftPillars = () => (
+  <section id="pilares" className="essence-section section-space" aria-label="Nuestra esencia y pilares artesanales">
+    <div className="page-shell">
+      <div className="section-heading">
+        <span className="eyebrow">Nuestra esencia</span>
+        <h2 className="editorial-title editorial-title--section">Historias que nacen junto al mar</h2>
+        <p>Artesanías con alma y corazón.</p>
       </div>
 
-    </section>
-  );
-};
+      <div className="essence-stories" aria-label="Historias de nuestra esencia">
+        {BRAND_PHOTOGRAPHS.map((photo, index) => (
+          <div className="essence-story" key={photo.src}>
+            <span
+              className="essence-story__image-frame"
+              role="img"
+              aria-label={photo.alt}
+              style={{ backgroundImage: `url("${photo.src}")`, backgroundPosition: photo.position }}
+            >
+              <span className="essence-story__image-veil" aria-hidden="true" />
+            </span>
+            <span className="essence-story__label">{CRAFT_PILLARS[index].title}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="pillar-heading">
+        <span className="eyebrow">Los 4 sellos de nuestra identidad</span>
+      </div>
+      <div className="pillars-grid">
+        {CRAFT_PILLARS.map((item) => (
+          <article className="pillar-card" key={item.id}>
+            <span className="pillar-card__icon"><Icon name={item.icon} className="icon-20" /></span>
+            <div>
+              <h3>{item.title}</h3>
+              <span className="pillar-card__subtitle">{item.subtitle}</span>
+            </div>
+            <p>{item.desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 export default CraftPillars;

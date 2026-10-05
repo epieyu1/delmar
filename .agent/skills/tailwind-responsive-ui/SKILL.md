@@ -13,21 +13,61 @@ triggers:
 
 # 🎨 Tailwind Responsive UI — Del Mar Artesanías
 
+## Política obligatoria de medidas fluidas
+
+Esta regla tiene prioridad sobre cualquier ejemplo fijo más abajo y debe aplicarse
+en todos los rediseños de Del Mar Artesanías:
+
+- No fijar anchos, altos, tamaños de fuente, padding, márgenes o gaps de contenido
+  en píxeles.
+- Preferir contenido intrínseco (`auto`, `min-content`, `max-content`), proporciones
+  (`aspect-ratio`), fracciones (`fr`), porcentajes y límites fluidos con `clamp()`.
+- Definir escalas tipográficas y espacios como tokens fluidos en `rem`, `vw` y `clamp()`;
+  no crear una medida distinta para cada breakpoint si una interpolación fluida resuelve
+  el cambio.
+- Márgenes, padding y gaps deben reutilizar la escala compartida de espacios. Si un rol
+  necesita otra proporción (por ejemplo, área táctil o espacio del banner), definir un
+  token semántico en el sistema antes de introducir valores aislados en un componente.
+- Usar breakpoints para reorganizar la composición o el número de columnas, no para
+  saltar entre tamaños rígidos.
+- Las únicas medidas físicas pequeñas permitidas son detalles de trazo/borde e iconos
+  cuya legibilidad dependa de un tamaño mínimo. Los controles interactivos deben
+  alcanzar el área táctil mínima accesible aunque su forma visual sea compacta.
+
+Ejemplo recomendado:
+
+```css
+:root {
+  --page-gutter: clamp(1rem, 4vw, 1.5rem);
+  --section-space: clamp(2rem, 6vw, 4rem);
+  --space-sm: clamp(.5rem, 1.3vw, .75rem);
+  --space-md: clamp(.75rem, 2vw, 1rem);
+  --space-card: clamp(.75rem, 2.5vw, 1.25rem);
+  --touch-size: clamp(2.75rem, 3.2vw, 3rem);
+  --type-body: clamp(.875rem, .82rem + .18vw, 1rem);
+  --type-title: clamp(1.875rem, 1.45rem + 2vw, 2.125rem);
+}
+
+.page-shell { width: min(100%, 75rem); padding-inline: var(--page-gutter); margin-inline: auto; }
+.section { padding-block: var(--section-space); }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(.75rem, 2vw, 1rem); }
+```
+
 ## Principio Mobile-First
 
 Todo CSS debe escribirse **primero para móvil** y escalar con breakpoints:
 
 ```
-sin prefijo = móvil (< 640px)
-sm:  = tablet pequeña (≥ 640px)
-md:  = tablet (≥ 768px)
-lg:  = escritorio (≥ 1024px)
-xl:  = escritorio grande (≥ 1280px)
+sin prefijo = móvil (< 40rem)
+sm:  = tablet pequeña (≥ 40rem)
+md:  = tablet (≥ 48rem)
+lg:  = escritorio (≥ 64rem)
+xl:  = escritorio grande (≥ 80rem)
 ```
 
 ### ✅ Correcto — Mobile-First
 ```tsx
-<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-[clamp(.75rem,2vw,1.5rem)]">
 ```
 
 ### ❌ Incorrecto — Desktop-first
@@ -39,25 +79,27 @@ xl:  = escritorio grande (≥ 1280px)
 
 ## Sistema de Tokens de Color
 
-Tokens definidos en `tailwind.config.js`. **Nunca usar colores hexadecimales directos en clases Tailwind.**
+Usar los tokens aprobados por el rediseño actual. El tema antiguo de Tailwind ya no es
+la fuente de verdad para estos colores. **Nunca usar colores hexadecimales directos en
+clases Tailwind.**
 
 | Token | Uso | Color |
 |---|---|---|
-| `deep-blue` | Fondos oscuros, textos principales | `#1C3A4A` |
-| `teal` | Acentos secundarios, iconos | `#1C646D` |
-| `teal-dark` | Variante oscura de teal | `#164E56` |
-| `gold` | CTA primario, highlights, ornamentos | `#E89945` |
-| `sand` | Fondos claros, texto sobre oscuro | `#F5EDD8` |
-| `sand-light` | Variante más clara de sand | `#FDF8EF` |
-| `terracotta` | Tags, badges, énfasis cálido | `#99482F` |
-| `wa-green` | Botones de WhatsApp | `#25D366` |
-| `wa-green-hover` | Hover de botones WhatsApp | `#1DA851` |
+| `bg-main` | Fondo principal | `#F4EFEA` |
+| `bg-card-light` | Tarjetas y superficies beige | `#EFE8E1` |
+| `bg-card-white` | Superficie blanca | `#FFFFFF` |
+| `bg-dark` | Verde bosque para bloques destacados y footer | `#1C352D` |
+| `text-primary` | Texto principal | `#1E2421` |
+| `text-muted` | Texto secundario | `#7A7570` |
+| `accent-terracotta` | Acentos pequeños, tags e indicadores | `#C86D46` |
+| `wa-green` | Icono de WhatsApp; no colorear todo el botón | `#25D366` |
+| `border-subtle` | Divisores y bordes suaves | `#E2D8CE` |
 
 ### Uso correcto de opacidades con tokens:
 ```tsx
 // ✅ Opacidad con slash notation
-<div className="bg-gold/20 text-gold border-gold/40">
-<div className="bg-deep-blue/95">
+<div className="bg-[color:var(--accent-terracotta)]/20 text-[var(--accent-terracotta-text)]">
+<div className="bg-[color:var(--bg-dark)]/95">
 
 // ❌ Nunca usar colores hardcodeados
 <div style={{ backgroundColor: '#E89945' }}>
@@ -69,28 +111,38 @@ Tokens definidos en `tailwind.config.js`. **Nunca usar colores hexadecimales dir
 
 | Clase Tailwind | Fuente | Uso |
 |---|---|---|
-| `font-serif` | Playfair Display | Títulos, nombres de productos |
-| `font-script` | Great Vibes | Citas, slogan emocional, subtítulos poéticos |
-| `font-sans` | Inter | Cuerpo de texto, descripciones, navegación |
+| `font-serif` | Playfair Display | Títulos y nombres de producto |
+| `font-sans` | DM Sans | UI, cuerpo, descripciones y navegación |
 
 ### Escala tipográfica recomendada:
 
 ```tsx
-// Título principal (h1/h2)
-<h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-deep-blue">
+// Título y cuerpo con tokens fluidos del sistema
+<h1 className="font-serif text-[clamp(1.875rem,1.45rem+2vw,2.125rem)]">
+<p className="font-sans text-[clamp(.875rem,.82rem+.18vw,1rem)] leading-relaxed">
 
-// Subtítulo poético
-<p className="font-script text-lg sm:text-xl text-gold">
-
-// Cuerpo de texto
-<p className="font-sans text-sm sm:text-base text-deep-blue/85 leading-relaxed">
-
-// Label/badge (uppercase)
-<span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.28em] text-teal">
-
-// Texto pequeño auxiliar
-<span className="text-[11px] text-deep-blue/60">
+// Etiquetas discretas; el tamaño también debe venir de un token fluido
+<span className="text-[var(--type-label)] font-bold uppercase tracking-[.16em]">
 ```
+
+## Logos y marcas
+
+- Revisa el fondo del archivo de logo antes de usarlo. Prefiere SVG o PNG transparente
+  para integrarlo directamente sobre la superficie del header, contenido o footer.
+- No pongas una placa, tarjeta, borde redondeado ni fondo de color detrás del logo para
+  ocultar un fondo incrustado. Tampoco uses modos de mezcla como sustituto de un asset
+  transparente.
+- Si solo existe un raster con fondo incorporado, prepara una versión transparente con
+  bordes limpios y conserva el arte y los colores de marca. Comprueba el contraste sobre
+  cada superficie donde aparecerá.
+- Respeta la orientación del lockup. Si la composición requiere el nombre junto al
+  símbolo, mantén esa relación en móvil y escritorio y verifica que el nombre siga siendo
+  legible en ambos tamaños.
+- Reutiliza el mismo componente `BrandLogo`, lockup y escala en header y footer. No uses
+  otro archivo o una composición distinta para el footer. Solo cambia a la variante clara
+  u oscura cuando la superficie lo requiera para conservar contraste; la variante debe
+  mantener transparente el fondo y el mismo arte, proporción y relación entre símbolo y
+  nombre.
 
 ---
 
@@ -100,7 +152,7 @@ Tokens definidos en `tailwind.config.js`. **Nunca usar colores hexadecimales dir
 
 ```tsx
 // ✅ Catálogo de productos — OBLIGATORIO 2 cols en móvil
-<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-[clamp(.75rem,2vw,1.5rem)]">
   {products.map(product => (
     <ProductCard key={product.id} {...product} />
   ))}
@@ -110,7 +162,7 @@ Tokens definidos en `tailwind.config.js`. **Nunca usar colores hexadecimales dir
 ### Grilla de pilares artesanales
 ```tsx
 // ✅ 4 pilares — 2 en móvil, 4 en desktop
-<div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+<div className="grid grid-cols-2 lg:grid-cols-4 gap-[clamp(.75rem,2vw,1.5rem)]">
 ```
 
 ---
@@ -119,25 +171,22 @@ Tokens definidos en `tailwind.config.js`. **Nunca usar colores hexadecimales dir
 
 ### Card de producto estándar
 ```tsx
-// Aspect ratio fijo para uniformidad visual
+// Proporción consistente; el tamaño sigue el ancho disponible.
 <div className="
-  group relative rounded-2xl sm:rounded-3xl overflow-hidden
-  bg-white border-2 border-sand-light
-  hover:border-gold/40 hover:shadow-floating
-  transition-all duration-500 cursor-pointer
-  aspect-[3/4]  // Ratio retrato para fotos de productos en maniquí
+  group relative overflow-hidden rounded-[clamp(1rem,2vw,1.25rem)]
+  bg-white border border-[var(--border-subtle)]
+  hover:shadow-coastal transition-all duration-300 cursor-pointer
+  aspect-square
 ">
 ```
 
 ### Card de pilar artesanal
 ```tsx
-<div className="
-  group relative rounded-2xl sm:rounded-3xl overflow-hidden
-  bg-white border-2 border-sand-light
-  hover:border-gold/40 focus:outline-none focus:ring-2 focus:ring-gold/50
-  shadow-sm hover:shadow-floating
-  transition-all duration-500 cursor-pointer
-  aspect-square sm:aspect-auto sm:h-56 md:h-64
+<article className="
+  group grid min-w-0 justify-items-center gap-[clamp(.5rem,1.5vw,.75rem)]
+  rounded-[clamp(1rem,2vw,1.25rem)] border border-[var(--border-subtle)]
+  bg-[var(--bg-card-white)] p-[clamp(.75rem,2vw,1.25rem)]
+  transition-colors duration-300 hover:border-[var(--accent-terracotta)]
 ">
 ```
 
@@ -155,44 +204,66 @@ shadow-floating   → Elevación alta (carrusel, modales, hovers)
 
 ## Botones — Variantes
 
-### Botón CTA primario (dorado)
+### Botón CTA primario
 ```tsx
 <a href="#catalogo" className="
-  inline-flex items-center gap-2
-  bg-gold hover:bg-gold/90 text-deep-blue
-  px-5 py-3 sm:px-7 sm:py-3.5 rounded-full
-  font-bold text-xs sm:text-sm
-  shadow-lg hover:shadow-xl
-  transition-all active:scale-95 touch-manipulation
+  inline-flex items-center gap-[clamp(.5rem,1.2vw,.75rem)]
+  bg-[var(--bg-dark)] text-white rounded-[var(--radius-control)]
+  min-h-[var(--touch-size)] px-[var(--space-md)]
+  text-[clamp(.75rem,.7rem+.2vw,.875rem)] font-bold
+  transition-colors duration-300 active:scale-[.98] touch-manipulation
 ">
 ```
 
 ### Botón WhatsApp
 ```tsx
 <a href={waLink} target="_blank" rel="noopener noreferrer" className="
-  inline-flex items-center gap-2
-  bg-wa-green hover:bg-wa-green-hover text-white
-  px-5 py-3 sm:px-7 sm:py-3.5 rounded-full
-  font-bold text-xs sm:text-sm
-  shadow-lg hover:shadow-xl
-  transition-all active:scale-95 touch-manipulation
+  inline-flex items-center gap-[clamp(.5rem,1.2vw,.75rem)]
+  rounded-[var(--radius-control)] border border-[var(--border-subtle)]
+  bg-[var(--bg-dark)] text-white min-h-[var(--touch-size)] px-[var(--space-md)]
+  text-[clamp(.75rem,.7rem+.2vw,.875rem)] font-bold
+  transition-colors duration-300 active:scale-[.98] touch-manipulation
 ">
-  <WhatsAppIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+  <WhatsAppIcon className="size-[clamp(1rem,4vw,1.25rem)] text-[var(--accent-whatsapp)]" />
   <span>Texto del botón</span>
 </a>
 ```
 
 ---
 
+## Botones de contacto e indicadores
+
+- Reserva el verde WhatsApp al icono. El CTA principal y los botones de pedido usan el
+  mismo fondo verde bosque y texto claro; el icono conserva el verde WhatsApp. En el
+  footer verde, la acción puede ser transparente con borde para seguir visible.
+- Usa el mismo radio de control para acciones de contacto y pedido. Reserva las pills para
+  filtros y etiquetas. El botón «Contáctanos» debe igualar el padding horizontal del CTA
+  «Hablar con la Fundadora»; el botón de pedido puede usar el siguiente token fluido de la
+  escala para ganar algo de aire lateral. Mantén el precio y la acción en una fila de grid
+  compartida, y reserva una fila flexible para la descripción de cada tarjeta para anclar
+  los botones a la misma línea aunque cambie la longitud del texto. Conserva el área táctil.
+- Equilibra el relleno visual vertical y horizontal con el mismo token de espacio. Si hace
+  falta reducir la superficie visible, conserva el área táctil mínima y dibuja el fondo en
+  un pseudo-elemento centrado, sin que ese espacio extra parezca relleno del botón.
+- Conserva un área táctil accesible aunque el icono o el indicador se vean pequeños.
+- Los puntos del carrusel deben usar crema para estados inactivos y terracota para el
+  activo, con una sombra o contorno discreto que los mantenga legibles sobre las fotos.
+  No uses el verde WhatsApp para la paginación.
+
 ## Espaciado y Padding — Guía de Consistencia
 
 | Contexto | Mobile | Tablet | Desktop |
 |---|---|---|---|
-| Padding de sección | `py-10` | `sm:py-14` | `md:py-16` |
-| Padding interno de cards | `p-4` | `sm:p-5` | — |
-| Gap de grillas | `gap-3` | `sm:gap-4` | `md:gap-6` |
-| Padding horizontal global | `px-4` | `sm:px-6` | `lg:px-8` |
-| Max-width del contenedor | — | — | `max-w-7xl mx-auto` |
+| Padding de sección | `var(--section-space)` |
+| Padding interno de cards | `var(--space-card)` |
+| Gap de grillas | `var(--space-grid-wide)` |
+| Padding horizontal global | `var(--page-gutter)` |
+| Max-width del contenedor | `min(100%, 75rem)` con márgenes automáticos |
+
+El espacio del contenido antes del footer debe provenir del padding inferior de la última
+sección y del padding superior del footer, ambos con el token de sección. No sumes un
+padding inferior adicional al `main` para compensar la navegación fija; reserva el espacio
+de la navegación una sola vez al final del footer, donde el contenido puede quedar detrás.
 
 ---
 
@@ -218,15 +289,25 @@ className="active:scale-95 touch-manipulation"
 
 ## Gradientes de Legibilidad
 
-Para texto sobre imágenes de fondo:
+Regla obligatoria para cualquier texto sobre fotografías, banners o historias:
+
+- Garantiza contraste legible para el área más clara de cada imagen y en cada estado
+  del carrusel; no evalúes solo una foto ni el punto más oscuro.
+- Para texto normal, apunta al menos a una relación de contraste de 4.5:1; para texto
+  grande, al menos 3:1. Usa una capa oscura localizada detrás del área de lectura y no
+  dependas de la sombra del texto como sustituto del contraste.
+- Mantén la fotografía natural: concentra el oscurecimiento detrás del texto y deja
+  respirar las zonas que no llevan contenido.
+
+Ejemplo de gradientes localizados para texto sobre imágenes:
 
 ```tsx
-// Gradiente horizontal (imagen de fondo, texto a la izquierda)
-<div className="absolute inset-0 bg-gradient-to-r from-deep-blue/95 via-deep-blue/75 to-deep-blue/20 sm:to-transparent" />
+// Gradiente localizado para sostener el contraste sin oscurecer la foto completa.
+<div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(28,53,45,.82),rgba(28,53,45,.68)_65%,transparent_95%)]" />
 
 // Gradiente vertical (texto flotante sobre foto)
-<div className="absolute inset-0 bg-gradient-to-t from-deep-blue/85 via-deep-blue/20 to-transparent" />
+<div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(28,53,45,.86),rgba(28,53,45,.76)_50%,rgba(28,53,45,.58)_75%,transparent)]" />
 
 // Gradiente suave de fondo de sección
-<section className="bg-gradient-to-b from-sand via-sand-light/50 to-sand">
+<section className="bg-[linear-gradient(180deg,#F4EFEA,#EFE8E1_50%,#F4EFEA)]">
 ```
