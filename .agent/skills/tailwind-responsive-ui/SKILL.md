@@ -79,30 +79,43 @@ xl:  = escritorio grande (≥ 80rem)
 
 ## Sistema de Tokens de Color
 
-Usar los tokens aprobados por el rediseño actual. El tema antiguo de Tailwind ya no es
-la fuente de verdad para estos colores. **Nunca usar colores hexadecimales directos en
-clases Tailwind.**
+**El único origen de color del proyecto es `src/styles/tokens.css`.** Ningún componente,
+hoja de estilos ni clase puede declarar un hexadecimal, un `rgb()` ni un `hsl()`: siempre
+`var(--token)`. El proyecto usa CSS plano, no Tailwind; los nombres de abajo son las
+variables reales.
+
+Paleta de marca (6 valores exactos) + la tinta aprobada:
 
 | Token | Uso | Color |
 |---|---|---|
-| `bg-main` | Fondo principal | `#F4EFEA` |
-| `bg-card-light` | Tarjetas y superficies beige | `#EFE8E1` |
-| `bg-card-white` | Superficie blanca | `#FFFFFF` |
-| `bg-dark` | Verde bosque para bloques destacados y footer | `#1C352D` |
-| `text-primary` | Texto principal | `#1E2421` |
-| `text-muted` | Texto secundario | `#7A7570` |
-| `accent-terracotta` | Acentos pequeños, tags e indicadores | `#C86D46` |
-| `wa-green` | Icono de WhatsApp; no colorear todo el botón | `#25D366` |
-| `border-subtle` | Divisores y bordes suaves | `#E2D8CE` |
+| `--c-mist` | Fondo de página | `#E2F2EF` |
+| `--c-shell` | Tarjetas, chips, barras con texto | `#EBEAE5` |
+| `--c-glass` | Superficie de toda la tarjeta de producto | `#C3DFE3` |
+| `--c-aqua` | Reserva (sin uso tras unificar tarjetas) | `#A5CFCD` |
+| `--c-sand` | Reserva (sin uso tras unificar tarjetas) | `#E4DED0` |
+| `--c-sea` | Cabecera, botones rellenos, bloques fuertes, líneas | `#7FBBB2` |
+| `--c-ink` | Toda la tinta: texto, iconos, botones | `#233F52` |
 
-### Uso correcto de opacidades con tokens:
-```tsx
-// ✅ Opacidad con slash notation
-<div className="bg-[color:var(--accent-terracotta)]/20 text-[var(--accent-terracotta-text)]">
-<div className="bg-[color:var(--bg-dark)]/95">
+Roles semánticos (usar estos en el código, no la paleta directa):
+`--bg`, `--surface`, `--panel`, `--panel-first`, `--panel-alt`, `--panel-strong`,
+`--on-strong`, `--dark`, `--ink`, `--ink-soft`, `--on-dark`, `--accent`, `--line`,
+`--rule`, `--focus`.
 
-// ❌ Nunca usar colores hardcodeados
-<div style={{ backgroundColor: '#E89945' }}>
+### Regla de contraste que ordena la distribución
+
+La tinta `#233F52` pasa AA sobre las seis superficies: mist 9,55:1 · shell 9,15:1 ·
+sand 8,22:1 · glass 7,87:1 · aqua 6,51:1 · sea 5,07:1. Al revés no: texto claro sobre
+sea da 1,88:1, así que el teal **siempre** lleva tinta oscura. Tampoco se usa `opacity`
+para aclarar texto: cambia el color renderizado y lo saca de la paleta.
+
+```css
+/* ✅ Correcto */
+.card { background: var(--surface); color: var(--ink); }
+.card__frame { background: var(--panel-first); }
+.section { border-top: 2px solid var(--rule); }
+
+/* ❌ Incorrecto: color fuera de tokens */
+.card { background: #F4EFEA; color: rgba(32, 39, 37, .8); }
 ```
 
 ---

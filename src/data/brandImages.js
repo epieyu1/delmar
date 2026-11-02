@@ -7,21 +7,21 @@ export const BRAND_PHOTOGRAPHS = [
   {
     src: founderBeachImage,
     alt: 'Fundadora de Del Mar en la playa de La Guajira',
-    position: 'center 66%'
+    position: 'center 78%'
   },
   {
     src: manaureCoastImage,
     alt: 'Fundadora de Del Mar junto al mar y la costa rocosa de La Guajira',
-    position: 'center 63%'
+    position: 'center 78%'
   },
   {
     src: founderCoastImage,
     alt: 'Fundadora de Del Mar frente al mar de La Guajira',
-    position: 'center 62%'
+    position: 'center 78%'
   },
   {
     src: manaureSalinasImage,
     alt: 'Fundadora de Del Mar en las Salinas de Manaure',
-    position: 'center 63%'
+    position: 'center 78%'
   }
 ];

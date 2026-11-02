@@ -1,0 +1,118 @@
+/* =============================================================================
+   Del Mar Artesanías · Sistema de diseño
+   ÚNICA fuente de verdad para color, tipografía, radios y sombras.
+
+   Regla de oro: ningún otro archivo declara un color. Todo `background`,
+   `color` y `border-color` del proyecto referencia un token de este archivo.
+   Se importa antes de index.css desde main.jsx.
+
+   Paleta de marca — 6 valores exactos, sin derivaciones a mano:
+     MIST  #E2F2EF   GLASS #C3DFE3   AQUA  #A5CFCD
+     SEA   #7FBBB2   SAND  #E4DED0   SHELL #EBEAE5
+
+   Tinta aprobada por el cliente (no está en la paleta, es el séptimo valor):
+     INK   #233F52
+
+   Contraste medido (WCAG 2.1), tinta #233F52 sobre cada superficie:
+     shell 9.15:1 · mist 9.55:1 · sand 8.22:1 · glass 7.87:1
+     aqua 6.51:1 · sea 5.07:1
+   Tinta clara sobre sea da 1.88:1, así que el teal nunca lleva texto claro:
+   lleva tinta oscura. Todo el texto del sitio vive en una de esas siete
+   combinaciones; no hay ninguna por debajo de 4,5:1.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ── 1 · Paleta de marca ───────────────────────────────────────────────── */
+  --c-mist: #E2F2EF;
+  --c-glass: #C3DFE3;
+  --c-aqua: #A5CFCD;
+  --c-sea: #7FBBB2;
+  --c-sand: #E4DED0;
+  --c-shell: #EBEAE5;
+  --c-ink: #233F52;
+
+  /* ── 2 · Roles semánticos (el resto del CSS solo usa estos) ────────────── */
+  --bg: var(--c-mist);             /* fondo de página y de la app           */
+  --surface: var(--c-shell);       /* tarjetas, chips, barras con texto     */
+  --panel: var(--c-glass);         /* marco de foto, sin texto              */
+  --panel-first: var(--c-aqua);    /* primer tinte de cada rejilla          */
+  --panel-alt: var(--c-sand);      /* tinte alterno                         */
+  --panel-strong: var(--c-sea);    /* bloques de contenido fuertes          */
+  --on-strong: var(--c-ink);       /* texto sobre sea: 5.07:1               */
+  --dark: var(--c-ink);            /* botones, hero, chip activo            */
+  --dark-deep: var(--c-ink);       /* mismo tono: la jerarquía va por borde */
+  --ink: var(--c-ink);             /* todo el texto                         */
+  --ink-soft: var(--c-ink);        /* sin tono medio en la paleta: igual    */
+  --on-dark: var(--c-mist);        /* texto sobre tinta: 9.55:1             */
+  --accent: var(--c-sea);          /* formas y líneas                       */
+  --accent-warm: var(--c-sand);
+  --accent-soft: var(--c-aqua);
+  --line: var(--c-sea);            /* bordes de controles y tarjetas        */
+  --rule: var(--c-sea);            /* separador de sección (2 px)           */
+  --line-strong: var(--c-ink);
+  --focus: var(--c-sea);
+
+  /* ── 3 · Derivados (solo velos y sombras; nunca superficies) ───────────── */
+  --scrim: var(--dark);
+  --scrim: color-mix(in srgb, var(--c-ink) 86%, transparent);
+  --scrim-soft: var(--dark);
+  --scrim-soft: color-mix(in srgb, var(--c-ink) 62%, transparent);
+  --veil: color-mix(in srgb, var(--c-ink) 8%, transparent);
+  --shadow-card: 0 3px 12px color-mix(in srgb, var(--c-ink) 10%, transparent);
+  --shadow-float: 0 10px 28px color-mix(in srgb, var(--c-ink) 18%, transparent);
+  --shadow-bar: 0 1px 0 color-mix(in srgb, var(--c-ink) 12%, transparent);
+
+  /* ── 4 · Tipografía ────────────────────────────────────────────────────── */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: var(--font-display);
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --tracking-label: .16em;
+  --leading-tight: 1.15;
+  --leading-normal: 1.5;
+
+  /* Escala: --text-<px> con la misma medida que tenía el diseño, en rem. */
+  --text-7: .4375rem;
+  --text-8: .5rem;
+  --text-9: .5625rem;
+  --text-10: .625rem;
+  --text-10-5: .65625rem;
+  --text-11: .6875rem;
+  --text-12: .75rem;
+  --text-13: .8125rem;
+  --text-14: .875rem;
+  --text-15: .9375rem;
+  --text-16: 1rem;
+  --text-17: 1.0625rem;
+  --text-18: 1.125rem;
+  --text-20: 1.25rem;
+  --text-22: 1.375rem;
+  --text-23: 1.4375rem;
+  --text-24: 1.5rem;
+  --text-28: 1.75rem;
+  --text-31: 1.9375rem;
+  --text-32: 2rem;
+
+  /* Roles tipográficos estables (apuntan a la escala, no la duplican). */
+  --text-eyebrow: var(--text-11);
+  --text-card-name: var(--text-13);
+  --text-card-price: var(--text-13);
+  --text-section: var(--text-24);
+  --text-body: var(--text-15);
+  --text-nav: var(--text-13);
+
+  /* ── 5 · Espacio, radios y alturas ─────────────────────────────────────── */
+  --page-gutter: 17px;
+  --header-height: 54px;
+  --bottom-nav-height: 62px;
+  --radius-card: 19px;
+  --radius-tile: 14px;
+  --radius-small: 10px;
+  --radius-pill: 9999px;
+}

@@ -55,6 +55,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'mochilon-wayuu-gran-capacidad-kanaas',
     name: 'Mochilón Wayuu Gran Capacidad – Simbología Kanaas',
+    cardName: 'Mochilón Wayuu Kanaas',
     category: 'Mochilas',
     price: 220000,
     tag: 'Simbología Kanaas',
@@ -72,6 +73,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'mini-bucket-bag-artesanal-verde-oliva-beige',
     name: 'Mini Bucket Bag Artesanal – Verde Oliva & Beige (Interior Impermeable)',
+    cardName: 'Mini Bucket Bag Verde Oliva',
     category: 'Bolsos',
     price: 110000,
     tag: 'Interior Impermeable',
@@ -100,6 +102,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'mini-mochila-artesanal-lujo-bordado-floral-perlas',
     name: 'Mini Mochila Artesanal de Lujo – Edición Bordado Floral & Perlas',
+    cardName: 'Mini Mochila Bordado Floral',
     category: 'Mochilas',
     price: 90000,
     tag: 'Bordado Floral & Perlas',
@@ -120,6 +123,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'llavero-souvenir-kasha-wayuu-borla-artesanal',
     name: 'Llaveros Souvenir Wayuu Artesanales – Kasha y Pompón',
+    cardName: 'Llaveros Kasha y Pompón',
     category: 'Llaveros',
     price: 10000,
     tag: 'Kasha y Pompón',
@@ -153,6 +157,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'monedero-pouch-pequeno-bordado-con-asa',
     name: 'Monedero / Pouch Pequeño Bordado con Asa',
+    cardName: 'Monedero Bordado con Asa',
     category: 'Bolsos',
     price: 12000,
     tag: 'Motivos bordados',
@@ -190,6 +195,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'mini-bolso-porta-celular-tejido-relieve-edicion-mariposa',
     name: 'Mini Bolso Porta Celular Tejido en Relieve – Edición Mariposa',
+    cardName: 'Mini Bolso Mariposa',
     category: 'Bolsos',
     price: 30000,
     tag: 'Edición Mariposa',
@@ -210,6 +216,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'mini-mochila-artesanal-recamada-hilo-metalico-perlas',
     name: 'Mini Mochila Artesanal Recamada en Hilo Metálico y Perlas',
+    cardName: 'Mini Mochila Hilo Metálico',
     category: 'Mochilas',
     price: 85000,
     tag: 'Hilo Metálico y Perlas',
@@ -235,6 +242,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'mini-mochila-de-mano-bucket-bag-artesanal',
     name: 'Mini Mochila de Mano / Bucket Bag Artesanal',
+    cardName: 'Mini Bucket Bag Artesanal',
     category: 'Bolsos',
     price: 45000,
     tag: 'Geométrico y Camel',
@@ -263,6 +271,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'mini-bolso-tejido-mano-apliques-perlas-herrajes-dorados',
     name: 'Mini Bolso Tejido de Mano con Apliques de Perlas y Herrajes Dorados',
+    cardName: 'Mini Bolso Perlas y Dorados',
     category: 'Bolsos',
     price: 70000,
     tag: 'Perlas y Herrajes Dorados',
@@ -283,6 +292,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'bolso-bucket-artesanal-dorado-edicion-especial-cadena-aros',
     name: 'Bolso Bucket Artesanal Dorado – Edición Especial Cadena de Aros',
+    cardName: 'Bolso Bucket Dorado',
     category: 'Bolsos',
     price: 90000,
     tag: 'Cadena de Aros',
@@ -303,6 +313,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'mochila-recamada-lujo-coleccion-gala-mediana',
     name: 'Mochila Recamada de Lujo – Colección Gala Mediana',
+    cardName: 'Mochila Gala Mediana',
     category: 'Mochilas',
     price: 130000,
     tag: 'Colección Gala',
@@ -323,6 +334,7 @@ export const INITIAL_PRODUCTS = [
   {
     id: 'sombrero-tejido-artesanal-negro-dorado-motivos-geometricos',
     name: 'Sombrero Tejido Artesanal "Negro & Dorado" con Motivos Geométricos',
+    cardName: 'Sombrero Negro & Dorado',
     category: 'Sombreros y Gorros',
     price: 80000,
     tag: 'Negro & Dorado',
